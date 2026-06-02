@@ -3,11 +3,11 @@
   <h1>Analizador Inteligente de Contratos con NLP</h1>
   <p><i>Un sistema automatizado para detectar cláusulas abusivas usando Inteligencia Artificial, Bases de Datos Vectoriales y Arquitectura de Microservicios.</i></p>
 
-  [![Python](https://img.shields.io/badge/Python-3.11-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
-  [![FastAPI](https://img.shields.io/badge/FastAPI-0.136-009688.svg?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-  [![Streamlit](https://img.shields.io/badge/Streamlit-1.58-FF4B4B.svg?style=flat&logo=streamlit&logoColor=white)](https://streamlit.io)
-  [![ChromaDB](https://img.shields.io/badge/Chroma-Vector_DB-FF8E00.svg?style=flat)](https://www.trychroma.com)
-  [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg?style=flat&logo=docker&logoColor=white)](https://www.docker.com)
+  <a href="https://www.python.org"><img src="https://img.shields.io/badge/Python-3.11-3776AB.svg?style=flat&logo=python&logoColor=white" alt="Python"></a>
+  <a href="https://fastapi.tiangolo.com"><img src="https://img.shields.io/badge/FastAPI-0.136-009688.svg?style=flat&logo=fastapi&logoColor=white" alt="FastAPI"></a>
+  <a href="https://streamlit.io"><img src="https://img.shields.io/badge/Streamlit-1.58-FF4B4B.svg?style=flat&logo=streamlit&logoColor=white" alt="Streamlit"></a>
+  <a href="https://www.trychroma.com"><img src="https://img.shields.io/badge/Chroma-Vector_DB-FF8E00.svg?style=flat" alt="ChromaDB"></a>
+  <a href="https://www.docker.com"><img src="https://img.shields.io/badge/Docker-Ready-2496ED.svg?style=flat&logo=docker&logoColor=white" alt="Docker"></a>
 </div>
 
 ---
