@@ -27,6 +27,15 @@ Una plataforma inteligente diseñada para automatizar la revisión de contratos 
 
 ---
 
+### [📁 02 - Predicción de Generación Eléctrica](./02-PrediccionGeneraciónElectrica)
+**Tecnologías:** `Python` `Jupyter` `Pandas` `Docker` `Dashboarding` `Machine Learning (En Desarrollo)`
+
+Un pipeline de datos completo estructurado en arquitectura Medallón (Bronce, Plata, Oro). Este proyecto se encarga de la ingesta, limpieza, transformación y visualización de datos históricos de generación eléctrica y meteorológicos (AEMET, ESIOS). Incluye un panel interactivo y sentará las bases para un futuro modelo predictivo de Machine Learning de la demanda energética.
+
+👉 **[Ver detalles del proyecto](./02-PrediccionGeneraciónElectrica/README.md)**
+
+---
+
 <div align="center">
   <i>Este portfolio está en constante evolución. Nuevos proyectos se irán añadiendo a medida que sean completados.</i>
 </div>
