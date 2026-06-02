@@ -18,6 +18,13 @@ Cada carpeta de este repositorio representa un proyecto independiente y completa
 
 A continuación se detallan los proyectos actualmente disponibles en el portfolio:
 
+### [📁 00 - Remasterización DOOM (1993) en Unreal Engine 5](./00-RemasterDoomUR5)
+**Tecnologías:** `Unreal Engine 5` `Blueprints` `Level Design` `Game Development`
+
+Recreación fiel y modernizada de los dos primeros niveles del mítico videojuego *DOOM (1993)* utilizando la potencia de Unreal Engine 5. Este proyecto abarca desde el diseño de niveles (Blockout) hasta la programación de mecánicas de disparo, inteligencia artificial de los enemigos (NavMesh, Behavior Trees) y sistema de físicas, documentado en 6 fases de desarrollo en vídeo.
+
+---
+
 ### [📁 01 - Analizador Inteligente de Contratos](./01-AnalizadorContratos)
 **Tecnologías:** `Python` `FastAPI` `Streamlit` `ChromaDB` `NLP` `Docker`
 
