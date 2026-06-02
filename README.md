@@ -23,7 +23,7 @@ A continuación se detallan los proyectos actualmente disponibles en el portfoli
 
 Una plataforma inteligente diseñada para automatizar la revisión de contratos de arrendamiento. Extrae el texto de archivos PDF, segmenta automáticamente el documento en cláusulas individuales y utiliza una **Base de Datos Vectorial (ChromaDB)** junto con Modelos de Lenguaje (Sentence Transformers) para detectar cláusulas abusivas o ilegales comparándolas con un diccionario legal preestablecido. 
 
-👉 **[Ver código y detalles del proyecto](./01-AnalizadorContratos/)**
+👉 **[Ver código y detalles del proyecto](https://github.com/HugoBlancoAlonso/Portfolio/tree/main/01-AnalizadorContratos)**
 
 ---
 
@@ -32,7 +32,7 @@ Una plataforma inteligente diseñada para automatizar la revisión de contratos 
 
 Un pipeline de datos completo estructurado en arquitectura Medallón (Bronce, Plata, Oro). Este proyecto se encarga de la ingesta, limpieza, transformación y visualización de datos históricos de generación eléctrica y meteorológicos (AEMET, ESIOS). Incluye un panel interactivo y sentará las bases para un futuro modelo predictivo de Machine Learning de la demanda energética.
 
-👉 **[Ver código y detalles del proyecto](./02-PrediccionGeneraciónElectrica/)**
+👉 **[Ver código y detalles del proyecto](https://github.com/HugoBlancoAlonso/Portfolio/tree/main/02-PrediccionGeneraciónElectrica)**
 
 ---
 
