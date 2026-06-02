@@ -4,3 +4,6 @@ __pycache__/
 .DS_Store
 .venv/
 venv/
+
+# HTML generados en la capa Oro (Dashboard)
+02-PrediccionGeneraciónElectrica/oro/*.html
