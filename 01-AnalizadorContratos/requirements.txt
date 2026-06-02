@@ -1,0 +1,14 @@
+streamlit
+fastapi
+uvicorn
+pandas
+fpdf
+reportlab
+chromadb
+sentence-transformers
+spacy
+matplotlib
+seaborn
+PyMuPDF
+requests
+python-multipart
