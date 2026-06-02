@@ -51,24 +51,9 @@ pip install -r requirements.txt
 ```bash
 docker compose up -d
 ```
-2. Conectar HDFS con jupyter
-```
-docker network connect proyectofinal-iaybd_default jupyter_datascience
-```
----------------------------------------------------------------------------------------------------------------------------------------
+2. Verificar que el NameNode responde en `http://localhost:9870`.
 
-En caso de no funcionar hacer del compose up de ```jupiter.yml```
-
-    - 1. Cambiar el nombre de dicho archivo a ```compose.yml```
-
-    - 2. Ejecutarlo en una carpeta a parte ```docker compose up -d```.
-
-    - 3. Meter este proyecto dentro de la carpeta notebooks generda por el compose.yml
----------------------------------------------------------------------------------------------------------------------------------------
-
-3. Verificar que el NameNode responde en `http://localhost:9870`.
-
-4. Si es necesario, crear las rutas del datalake.
+3. Si es necesario, crear las rutas del datalake.
 
 ```bash
 docker exec namenode hdfs dfs -mkdir -p /datalake/plata/consumo
@@ -80,14 +65,14 @@ docker exec namenode hdfs dfs -chmod -R 777 /datalake
 
 ## Ejecución de la capa Plata
 
-1. Abrir [plata/extracion.ipynb](plata/extracion.ipynb).
+1. Abrir [plata/extracion.ipynb](../plata/extraccion.ipynb).
 2. Conectarse al kernel de jupyter.
 3. Ejecutar las celdas en orden.
 4. Comprobar que se generan los archivos parquet intermedios y que se suben a HDFS.
 
 ## Ejecución de la capa Oro
 
-1. Abrir [oro/combinacion.ipynb](oro/combinacion.ipynb).
+1. Abrir [oro/combinacion.ipynb](../oro/combinacion.ipynb).
 2. Ejecutar las celdas en orden.
 3. La última celda genera el dashboard interactivo y crea el archivo `oro/data/dashboard_df_consolidado.html`.
 
