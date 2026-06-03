@@ -4,6 +4,12 @@
   <p><i>Un escaparate técnico con mis proyectos más destacados en Machine Learning, Procesamiento de Lenguaje Natural (NLP), Análisis de Datos y Desarrollo Backend/Frontend.</i></p>
 </div>
 
+<div align="center">
+  <a href="./HugoBlancoAlonsoCV.pdf">
+    <img src="https://img.shields.io/badge/📄 Descargar%20CV-Ver%20Curriculum-blue?style=for-the-badge&logo=adobeacrobatreader&logoColor=white" alt="Descargar CV"/>
+  </a>
+</div>
+
 ---
 
 ## 📌 Propósito de este repositorio
@@ -45,4 +51,6 @@ Un pipeline de datos completo estructurado en arquitectura Medallón (Bronce, Pl
 
 <div align="center">
   <i>Este portfolio está en constante evolución. Nuevos proyectos se irán añadiendo a medida que sean completados.</i>
+  <br/><br/>
+  📄 <a href="./HugoBlancoAlonsoCV.pdf"><b>Consulta mi Curriculum Vitae aquí</b></a>
 </div>
