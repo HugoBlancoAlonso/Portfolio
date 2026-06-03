@@ -1,5 +1,5 @@
 /**
- * Register screen — create a new account with email/password.
+ * Register screen — create a new account with username + email/phone and password.
  */
 
 import { Ionicons } from '@expo/vector-icons';
@@ -13,44 +13,61 @@ import {
   StyleSheet,
   Text,
   View,
-  useColorScheme,
 } from 'react-native';
 
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Colors } from '../../constants/Colors';
 import { useAuth } from '../../hooks/useAuth';
+import { useAppTheme } from '../../hooks/useAppTheme';
 
 export default function RegisterScreen() {
-  const _colorScheme = useColorScheme();
-  const colorScheme = _colorScheme === 'dark' ? 'dark' : 'light';
-  const colors = Colors[colorScheme];
+  const { colors, activeTheme: colorScheme } = useAppTheme();
   const { register, isLoading, error, clearError } = useAuth();
+  const [formError, setFormError] = useState<string | null>(null);
 
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [registerMethod, setRegisterMethod] = useState<'email' | 'phone'>('email');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const isValidEmail = (e: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+  const isValidPhone = (p: string) => /^\+?[0-9]{5,15}$/.test(p);
+
   const handleRegister = async () => {
-    if (!fullName.trim() || !email.trim() || !password || !confirmPassword) {
-      Alert.alert('Error', 'Por favor completa todos los campos');
+    setFormError(null);
+    if (!username.trim() || !identifier.trim() || !password || !confirmPassword) {
+      setFormError('Por favor completa todos los campos');
+      return;
+    }
+    const cleanUsername = username.trim().replace(/^@/, '');
+    if (cleanUsername.length < 4) {
+      setFormError('El nombre de usuario debe tener al menos 4 letras');
+      return;
+    }
+    if (registerMethod === 'email' && !isValidEmail(identifier.trim())) {
+      setFormError('Por favor ingresa un correo electrónico válido');
+      return;
+    }
+    if (registerMethod === 'phone' && !isValidPhone(identifier.trim())) {
+      setFormError('Por favor ingresa un número de teléfono válido');
       return;
     }
     if (password.length < 8) {
-      Alert.alert('Error', 'La contraseña debe tener al menos 8 caracteres');
+      setFormError('La contraseña debe tener al menos 8 caracteres');
       return;
     }
     if (password !== confirmPassword) {
-      Alert.alert('Error', 'Las contraseñas no coinciden');
+      setFormError('Las contraseñas no coinciden');
       return;
     }
     try {
-      await register({
-        email: email.trim(),
-        password,
-        full_name: fullName.trim(),
-      });
+      const payload: any = { password, username: username.trim().replace(/^@/, '') };
+      if (registerMethod === 'email') payload.email = identifier.trim();
+      else payload.phone_number = identifier.trim();
+
+      await register(payload);
     } catch {
       // Error handled by store
     }
@@ -85,7 +102,7 @@ export default function RegisterScreen() {
         </View>
 
         {/* ─── Error ───────────────────────────────────────────── */}
-        {error && (
+        {(formError || error) && (
           <View
             style={[
               styles.errorContainer,
@@ -94,7 +111,7 @@ export default function RegisterScreen() {
           >
             <Ionicons name="alert-circle" size={18} color={colors.danger} />
             <Text style={[styles.errorText, { color: colors.danger }]}>
-              {error}
+              {formError || error}
             </Text>
           </View>
         )}
@@ -102,31 +119,72 @@ export default function RegisterScreen() {
         {/* ─── Form ────────────────────────────────────────────── */}
         <View style={styles.form}>
           <Input
-            label="Nombre completo"
-            placeholder="Tu nombre"
-            autoCapitalize="words"
-            autoComplete="name"
-            icon="person-outline"
-            value={fullName}
+            label="Nombre de usuario"
+            placeholder="@tu_usuario"
+            autoCapitalize="none"
+            autoComplete="username"
+            icon="at-outline"
+            value={username}
             onChangeText={(text) => {
-              setFullName(text);
+              setUsername(text);
+              setFormError(null);
               clearError();
             }}
           />
 
-          <Input
-            label="Email"
-            placeholder="tu@email.com"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            autoComplete="email"
-            icon="mail-outline"
-            value={email}
-            onChangeText={(text) => {
-              setEmail(text);
-              clearError();
-            }}
-          />
+          <View style={styles.toggleContainer}>
+            <Text
+              style={[
+                styles.toggleText,
+                registerMethod === 'email' ? { color: colors.primary, fontWeight: '700' } : { color: colors.textSecondary }
+              ]}
+              onPress={() => { setRegisterMethod('email'); setIdentifier(''); setFormError(null); clearError(); }}
+            >
+              Email
+            </Text>
+            <Text style={{ color: colors.border }}> | </Text>
+            <Text
+              style={[
+                styles.toggleText,
+                registerMethod === 'phone' ? { color: colors.primary, fontWeight: '700' } : { color: colors.textSecondary }
+              ]}
+              onPress={() => { setRegisterMethod('phone'); setIdentifier(''); setFormError(null); clearError(); }}
+            >
+              Teléfono
+            </Text>
+          </View>
+
+          {registerMethod === 'email' ? (
+            <Input
+              label="Email"
+              placeholder="tu@email.com"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoComplete="email"
+              icon="mail-outline"
+              value={identifier}
+              onChangeText={(text) => {
+                setIdentifier(text);
+                setFormError(null);
+                clearError();
+              }}
+            />
+          ) : (
+            <Input
+              label="Teléfono"
+              placeholder="+34 600 000 000"
+              keyboardType="phone-pad"
+              autoCapitalize="none"
+              autoComplete="tel"
+              icon="call-outline"
+              value={identifier}
+              onChangeText={(text) => {
+                setIdentifier(text);
+                setFormError(null);
+                clearError();
+              }}
+            />
+          )}
 
           <Input
             label="Contraseña"
@@ -136,6 +194,7 @@ export default function RegisterScreen() {
             value={password}
             onChangeText={(text) => {
               setPassword(text);
+              setFormError(null);
               clearError();
             }}
           />
@@ -148,6 +207,7 @@ export default function RegisterScreen() {
             value={confirmPassword}
             onChangeText={(text) => {
               setConfirmPassword(text);
+              setFormError(null);
               clearError();
             }}
           />
@@ -223,6 +283,16 @@ const styles = StyleSheet.create({
   },
   form: {
     gap: 4,
+  },
+  toggleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 16,
+    marginTop: 8,
+  },
+  toggleText: {
+    fontSize: 16,
+    paddingHorizontal: 8,
   },
   footer: {
     flexDirection: 'row',

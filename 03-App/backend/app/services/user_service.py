@@ -30,21 +30,39 @@ async def get_user_by_email(db: AsyncSession, email: str) -> User | None:
     return result.scalar_one_or_none()
 
 
+async def get_user_by_phone_number(db: AsyncSession, phone_number: str) -> User | None:
+    """Get a user by phone number, returns None if not found."""
+    result = await db.execute(select(User).where(User.phone_number == phone_number))
+    return result.scalar_one_or_none()
+
+
 async def create_user(
     db: AsyncSession,
-    email: str,
+    email: str | None,
+    phone_number: str | None,
     password: str,
-    full_name: str,
+    username: str,
 ) -> User:
-    """Create a new user with email/password. Raises 409 if email exists."""
-    existing = await get_user_by_email(db, email)
-    if existing:
-        raise AlreadyExistsException("User with this email")
+    """Create a new user. Raises 409 if username or phone exists."""
+    if not email and not phone_number:
+        from app.core.exceptions import BadRequestException
+        raise BadRequestException("Se requiere un correo electrónico o número de teléfono")
+
+    # Check username uniqueness
+    existing_username = await db.execute(select(User).where(User.username == username))
+    if existing_username.scalar_one_or_none():
+        raise AlreadyExistsException("El nombre de usuario ya está en uso")
+
+    if phone_number:
+        existing = await get_user_by_phone_number(db, phone_number)
+        if existing:
+            raise AlreadyExistsException("El número de teléfono ya está registrado")
 
     user = User(
         email=email,
+        phone_number=phone_number,
         hashed_password=hash_password(password),
-        full_name=full_name,
+        username=username,
     )
     db.add(user)
     await db.flush()
@@ -84,10 +102,21 @@ async def create_or_get_oauth_user(
         await db.flush()
         return user
 
+    import random
+    
+    username = f"user_{random.randint(100000, 999999)}"
+    while True:
+        existing_username = await db.execute(select(User).where(User.username == username))
+        if existing_username.scalar_one_or_none():
+            username = f"user_{random.randint(100000, 999999)}"
+        else:
+            break
+
     # Create new user
     user = User(
         email=email,
         full_name=full_name or email.split("@")[0],
+        username=username,
         avatar_url=avatar_url,
         is_verified=True,  # OAuth users are pre-verified
         **{provider_field: provider_user_id},
@@ -97,19 +126,41 @@ async def create_or_get_oauth_user(
     return user
 
 
-async def authenticate_user(db: AsyncSession, email: str, password: str) -> User | None:
-    """Verify email/password and return user, or None if invalid."""
-    user = await get_user_by_email(db, email)
-    if not user or not user.hashed_password:
-        return None
+async def authenticate_user(db: AsyncSession, identifier: str, password: str) -> User | None:
+    """Verify identifier (email/phone/username) and password and return user, or None if invalid."""
+    from sqlalchemy import or_
+    
+    result = await db.execute(
+        select(User).where(
+            or_(
+                User.email == identifier,
+                User.phone_number == identifier,
+                User.username == identifier,
+            )
+        )
+    )
+    user = result.scalar_one_or_none()
+
+    if not user:
+        return None  # user_not_found
+    if not user.hashed_password:
+        return None  # no_password
     if not verify_password(password, user.hashed_password):
-        return None
+        from app.core.exceptions import BadRequestException
+        raise BadRequestException("Contraseña incorrecta")
     return user
 
 
 async def update_user(db: AsyncSession, user: User, data: UserUpdate) -> User:
     """Update user profile fields."""
     update_data = data.model_dump(exclude_unset=True)
+            
+    if "username" in update_data and update_data["username"] != user.username:
+        result = await db.execute(select(User).where(User.username == update_data["username"]))
+        existing = result.scalar_one_or_none()
+        if existing and existing.id != user.id:
+            raise AlreadyExistsException("El nombre de usuario ya está en uso")
+
     for field, value in update_data.items():
         setattr(user, field, value)
     await db.flush()

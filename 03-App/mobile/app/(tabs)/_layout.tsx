@@ -6,14 +6,12 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { useColorScheme } from 'react-native';
 
 import { Colors } from '../../constants/Colors';
+import { useAppTheme } from '../../hooks/useAppTheme';
 
 export default function TabLayout() {
-  const _colorScheme = useColorScheme();
-  const colorScheme = _colorScheme === 'dark' ? 'dark' : 'light';
-  const colors = Colors[colorScheme];
+  const { colors, activeTheme: colorScheme } = useAppTheme();
 
   return (
     <Tabs

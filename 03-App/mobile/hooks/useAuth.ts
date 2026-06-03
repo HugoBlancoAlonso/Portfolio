@@ -18,6 +18,9 @@ export function useAuth() {
     logout,
     restoreSession,
     refreshProfile,
+    updateProfile,
+    updateAvatar,
+    deleteAccount,
     clearError,
   } = useAuthStore();
 
@@ -37,6 +40,9 @@ export function useAuth() {
     logout,
     restoreSession,
     refreshProfile,
+    updateProfile,
+    updateAvatar,
+    deleteAccount,
     clearError,
   };
 }

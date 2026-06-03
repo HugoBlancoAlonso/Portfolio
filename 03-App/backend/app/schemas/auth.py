@@ -6,18 +6,19 @@ from pydantic import BaseModel, EmailStr, Field
 
 
 class LoginRequest(BaseModel):
-    """Email/password login."""
+    """Payload for logging in with email, phone or username."""
 
-    email: EmailStr
+    identifier: str = Field(..., description="Email, phone number or username")
     password: str = Field(..., min_length=8, max_length=128)
 
 
 class RegisterRequest(BaseModel):
     """New user registration."""
 
-    email: EmailStr
+    email: EmailStr | None = None
+    phone_number: str | None = None
     password: str = Field(..., min_length=8, max_length=128)
-    full_name: str = Field(..., min_length=1, max_length=255)
+    username: str = Field(..., min_length=4, max_length=50)
 
 
 class TokenResponse(BaseModel):
@@ -32,6 +33,12 @@ class RefreshRequest(BaseModel):
     """Request to refresh an expired access token."""
 
     refresh_token: str
+
+class ChangePasswordRequest(BaseModel):
+    """Change user password."""
+
+    current_password: str
+    new_password: str = Field(..., min_length=8, max_length=128)
 
 
 class GoogleLoginRequest(BaseModel):

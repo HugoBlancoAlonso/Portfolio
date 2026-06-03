@@ -9,9 +9,7 @@ export const Config = {
    * Change this to your production URL when deploying.
    */
   API_BASE_URL: __DEV__
-    ? Platform.OS === 'web'
-      ? 'http://127.0.0.1:8000'
-      : 'http://192.168.0.63:8000'  // Local dev — replace with your machine's IP
+    ? 'http://192.168.0.63:8000'  // Local dev — replace with your machine's IP
     : 'https://api.yourapp.com',
 
   /**

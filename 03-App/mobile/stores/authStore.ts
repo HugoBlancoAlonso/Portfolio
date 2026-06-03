@@ -4,6 +4,7 @@
  * Persists tokens in SecureStore for session restoration.
  */
 
+import { Platform } from 'react-native';
 import { create } from 'zustand';
 
 import { Config } from '../constants/Config';
@@ -29,6 +30,9 @@ interface AuthState {
   logout: () => Promise<void>;
   restoreSession: () => Promise<void>;
   refreshProfile: () => Promise<void>;
+  updateProfile: (data: any) => Promise<void>;
+  updateAvatar: (uri: string) => Promise<void>;
+  deleteAccount: () => Promise<void>;
   clearError: () => void;
 }
 
@@ -51,8 +55,16 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       const user = await authService.getProfile();
       set({ user, isAuthenticated: true, isLoading: false });
     } catch (error: any) {
-      const message =
-        error.response?.data?.detail || 'Error al iniciar sesión';
+      console.error("Login error:", error.response?.data || error.message);
+      let message = 'Error al iniciar sesión';
+      const detail = error.response?.data?.detail;
+      if (typeof detail === 'string') {
+        message = detail;
+      } else if (Array.isArray(detail) && detail.length > 0 && detail[0].msg) {
+        message = detail[0].msg;
+      } else if (error.message) {
+        message = `Error de red: ${error.message}`;
+      }
       set({ error: message, isLoading: false });
       throw error;
     }
@@ -69,8 +81,16 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       const user = await authService.getProfile();
       set({ user, isAuthenticated: true, isLoading: false });
     } catch (error: any) {
-      const message =
-        error.response?.data?.detail || 'Error al registrarse';
+      console.error("Register error:", error.response?.data || error.message);
+      let message = 'Error al registrarse';
+      const detail = error.response?.data?.detail;
+      if (typeof detail === 'string') {
+        message = detail;
+      } else if (Array.isArray(detail) && detail.length > 0 && detail[0].msg) {
+        message = detail[0].msg;
+      } else if (error.message) {
+        message = `Error de red: ${error.message}`;
+      }
       set({ error: message, isLoading: false });
       throw error;
     }
@@ -150,6 +170,72 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       set({ user });
     } catch {
       // Silently fail — profile refresh is not critical
+    }
+  },
+
+  // ─── Update Profile ────────────────────────────────────────
+  updateProfile: async (data: any) => {
+    set({ isLoading: true, error: null });
+    try {
+      const user = await authService.updateProfile(data);
+      set({ user, isLoading: false });
+    } catch (error: any) {
+      const message = error.response?.data?.detail || 'Error al actualizar perfil';
+      set({ error: message, isLoading: false });
+      throw error;
+    }
+  },
+
+  // ─── Update Avatar ─────────────────────────────────────────
+  updateAvatar: async (uri: string) => {
+    set({ isLoading: true, error: null });
+    try {
+      const formData = new FormData();
+      
+      if (Platform.OS === 'web') {
+        const res = await fetch(uri);
+        const blob = await res.blob();
+        formData.append('file', blob, 'avatar.jpg');
+      } else {
+        const filename = uri.split('/').pop() || 'avatar.jpg';
+        const match = /\.(\w+)$/.exec(filename);
+        let ext = match ? match[1].toLowerCase() : 'jpeg';
+        if (ext === 'jpg') ext = 'jpeg';
+        const type = `image/${ext}`;
+        
+        formData.append('file', {
+          uri,
+          name: filename,
+          type,
+        } as any);
+      }
+
+      const user = await authService.updateAvatar(formData);
+      set({ user, isLoading: false });
+    } catch (error: any) {
+      const message = error.response?.data?.detail || 'Error al actualizar el avatar';
+      set({ error: message, isLoading: false });
+      throw error;
+    }
+  },
+
+  // ─── Delete Account ────────────────────────────────────────
+  deleteAccount: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      await authService.deleteAccount();
+      await SecureStore.deleteItemAsync(STORAGE_KEYS.ACCESS_TOKEN);
+      await SecureStore.deleteItemAsync(STORAGE_KEYS.REFRESH_TOKEN);
+      set({
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
+        error: null,
+      });
+    } catch (error: any) {
+      const message = error.response?.data?.detail || 'Error al eliminar cuenta';
+      set({ error: message, isLoading: false });
+      throw error;
     }
   },
 

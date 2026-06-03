@@ -7,8 +7,11 @@
 export interface User {
   id: string;
   email: string;
+  username?: string | null;
+  phone_number?: string | null;
   full_name: string;
-  avatar_url: string | null;
+  avatar_url?: string | null;
+  bio?: string | null;
   is_active: boolean;
   is_verified: boolean;
   created_at: string;
@@ -35,14 +38,15 @@ export interface TokenResponse {
 }
 
 export interface LoginRequest {
-  email: string;
+  identifier: string;
   password: string;
 }
 
 export interface RegisterRequest {
-  email: string;
+  email?: string;
+  phone_number?: string;
   password: string;
-  full_name: string;
+  username: string;
 }
 
 // ─── Posts ──────────────────────────────────────────────────────

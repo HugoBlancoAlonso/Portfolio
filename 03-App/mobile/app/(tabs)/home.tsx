@@ -9,18 +9,16 @@ import {
   StyleSheet,
   Text,
   View,
-  useColorScheme,
   RefreshControl,
 } from 'react-native';
 
 import { Card } from '../../components/ui/Card';
 import { Colors } from '../../constants/Colors';
 import { useAuth } from '../../hooks/useAuth';
+import { useAppTheme } from '../../hooks/useAppTheme';
 
 export default function HomeScreen() {
-  const _colorScheme = useColorScheme();
-  const colorScheme = _colorScheme === 'dark' ? 'dark' : 'light';
-  const colors = Colors[colorScheme];
+  const { colors, activeTheme: colorScheme } = useAppTheme();
   const { user } = useAuth();
   const [refreshing, setRefreshing] = React.useState(false);
 

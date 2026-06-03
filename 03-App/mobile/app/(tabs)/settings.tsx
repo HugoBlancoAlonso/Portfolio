@@ -3,6 +3,7 @@
  */
 
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import {
   Alert,
@@ -12,11 +13,12 @@ import {
   Switch,
   Text,
   View,
-  useColorScheme,
 } from 'react-native';
 
 import { Colors } from '../../constants/Colors';
 import { useAuth } from '../../hooks/useAuth';
+import { useAppTheme } from '../../hooks/useAppTheme';
+import { useThemeStore } from '../../stores/themeStore';
 
 interface SettingsItemProps {
   icon: keyof typeof Ionicons.glyphMap;
@@ -35,9 +37,7 @@ function SettingsItem({
   rightElement,
   danger = false,
 }: SettingsItemProps) {
-  const _colorScheme = useColorScheme();
-  const colorScheme = _colorScheme === 'dark' ? 'dark' : 'light';
-  const colors = Colors[colorScheme];
+  const { colors, activeTheme: colorScheme } = useAppTheme();
 
   return (
     <Pressable
@@ -94,10 +94,11 @@ function SettingsItem({
 }
 
 export default function SettingsScreen() {
-  const _colorScheme = useColorScheme();
-  const colorScheme = _colorScheme === 'dark' ? 'dark' : 'light';
-  const colors = Colors[colorScheme];
-  const { logout, user } = useAuth();
+  
+  const { theme, setTheme } = useThemeStore();
+  const { colors, activeTheme } = useAppTheme();
+  const { logout, deleteAccount, user } = useAuth();
+  const router = useRouter();
 
   const handleLogout = () => {
     Alert.alert(
@@ -109,6 +110,27 @@ export default function SettingsScreen() {
           text: 'Cerrar Sesión',
           style: 'destructive',
           onPress: () => logout(),
+        },
+      ]
+    );
+  };
+
+  const handleDeleteAccount = () => {
+    Alert.alert(
+      'Eliminar Cuenta',
+      'Esta acción es irreversible. Todos tus datos, publicaciones y seguidores serán eliminados para siempre. ¿Estás absolutamente seguro?',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Eliminar',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await deleteAccount();
+            } catch (err: any) {
+              Alert.alert('Error', err?.message || 'No se pudo eliminar la cuenta');
+            }
+          },
         },
       ]
     );
@@ -130,20 +152,14 @@ export default function SettingsScreen() {
         <SettingsItem
           icon="person-outline"
           title="Editar Perfil"
-          subtitle={user?.email || ''}
-          onPress={() => {}}
+          subtitle={user?.email || user?.phone_number || ''}
+          onPress={() => router.push('/(settings)/edit-profile')}
         />
         <View style={[styles.divider, { backgroundColor: colors.separator }]} />
         <SettingsItem
           icon="lock-closed-outline"
           title="Cambiar Contraseña"
-          onPress={() => {}}
-        />
-        <View style={[styles.divider, { backgroundColor: colors.separator }]} />
-        <SettingsItem
-          icon="shield-outline"
-          title="Privacidad"
-          onPress={() => {}}
+          onPress={() => router.push('/(settings)/change-password')}
         />
       </View>
 
@@ -158,17 +174,17 @@ export default function SettingsScreen() {
           icon="notifications-outline"
           title="Notificaciones"
           subtitle="Configurar alertas push"
-          onPress={() => {}}
+          onPress={() => router.push('/(settings)/notifications')}
         />
         <View style={[styles.divider, { backgroundColor: colors.separator }]} />
         <SettingsItem
-          icon={colorScheme === 'dark' ? 'moon' : 'sunny-outline'}
-          title="Tema Oscuro"
-          subtitle="Sigue la configuración del sistema"
+          icon={activeTheme === 'dark' ? 'moon' : 'sunny-outline'}
+          title="Modo Oscuro"
+          subtitle={theme === 'system' ? 'Automático' : 'Manual'}
           rightElement={
             <Switch
-              value={colorScheme === 'dark'}
-              disabled
+              value={activeTheme === 'dark'}
+              onValueChange={(val) => setTheme(val ? 'dark' : 'light')}
               trackColor={{ false: colors.border, true: colors.primary }}
               thumbColor={colors.surface}
             />
@@ -184,22 +200,15 @@ export default function SettingsScreen() {
         style={[styles.section, { backgroundColor: colors.surface, borderColor: colors.border }]}
       >
         <SettingsItem
-          icon="information-circle-outline"
-          title="Acerca de"
-          subtitle="Versión 1.0.0"
-          onPress={() => {}}
-        />
-        <View style={[styles.divider, { backgroundColor: colors.separator }]} />
-        <SettingsItem
           icon="document-text-outline"
           title="Términos y Condiciones"
-          onPress={() => {}}
+          onPress={() => router.push('/(settings)/terms')}
         />
         <View style={[styles.divider, { backgroundColor: colors.separator }]} />
         <SettingsItem
           icon="help-circle-outline"
           title="Ayuda y Soporte"
-          onPress={() => {}}
+          onPress={() => Alert.alert('Ayuda y Soporte', 'Contacta a support@ejemplo.com para recibir ayuda.')}
         />
       </View>
 
@@ -214,6 +223,13 @@ export default function SettingsScreen() {
           icon="log-out-outline"
           title="Cerrar Sesión"
           onPress={handleLogout}
+          danger
+        />
+        <View style={[styles.divider, { backgroundColor: colors.separator, marginLeft: 0 }]} />
+        <SettingsItem
+          icon="trash-outline"
+          title="Eliminar Cuenta"
+          onPress={handleDeleteAccount}
           danger
         />
       </View>

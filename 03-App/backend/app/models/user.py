@@ -21,17 +21,35 @@ class User(Base):
     __tablename__ = "users"
 
     # ─── Profile ────────────────────────────────────────────────
-    email: Mapped[str] = mapped_column(
+    email: Mapped[Optional[str]] = mapped_column(
         String(255),
+        unique=False,
+        index=True,
+        nullable=True,
+    )
+    username: Mapped[str] = mapped_column(
+        String(50),
         unique=True,
         index=True,
         nullable=False,
     )
-    full_name: Mapped[str] = mapped_column(
+    phone_number: Mapped[Optional[str]] = mapped_column(
+        String(20),
+        unique=False,
+        index=True,
+        nullable=True,
+        default=None,
+    )
+    full_name: Mapped[Optional[str]] = mapped_column(
         String(255),
-        nullable=False,
+        nullable=True,
     )
     avatar_url: Mapped[Optional[str]] = mapped_column(
+        Text,
+        nullable=True,
+        default=None,
+    )
+    bio: Mapped[Optional[str]] = mapped_column(
         Text,
         nullable=True,
         default=None,

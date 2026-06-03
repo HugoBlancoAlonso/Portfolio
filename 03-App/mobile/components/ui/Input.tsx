@@ -10,16 +10,17 @@ import {
   TextInput,
   TextInputProps,
   View,
-  useColorScheme,
 } from 'react-native';
 
-import { Colors } from '../../constants/Colors';
+import { useAppTheme } from '../../hooks/useAppTheme';
 import { Ionicons } from '@expo/vector-icons';
 
 interface InputProps extends Omit<TextInputProps, 'style'> {
   label?: string;
   error?: string;
   icon?: keyof typeof Ionicons.glyphMap;
+  containerStyle?: object;
+  inputStyle?: object;
 }
 
 export function Input({
@@ -27,11 +28,12 @@ export function Input({
   error,
   icon,
   secureTextEntry,
+  containerStyle,
+  inputStyle,
+  multiline,
   ...props
 }: InputProps) {
-  const _colorScheme = useColorScheme();
-  const colorScheme = _colorScheme === 'dark' ? 'dark' : 'light';
-  const colors = Colors[colorScheme];
+  const { colors, activeTheme: colorScheme } = useAppTheme();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
@@ -53,7 +55,10 @@ export function Input({
               : isFocused
               ? colors.primary
               : colors.border,
+            alignItems: multiline ? 'flex-start' : 'center',
+            paddingVertical: multiline ? 8 : 0,
           },
+          containerStyle,
         ]}
       >
         {icon && (
@@ -61,21 +66,22 @@ export function Input({
             name={icon}
             size={20}
             color={isFocused ? colors.primary : colors.icon}
-            style={styles.icon}
+            style={[styles.icon, multiline && { marginTop: 6 }]}
           />
         )}
 
         <TextInput
           style={[
             styles.input,
-            {
-              color: colors.text,
-            },
+            { color: colors.text },
+            multiline && { textAlignVertical: 'top', paddingTop: 8 },
+            inputStyle,
           ]}
           placeholderTextColor={colors.textTertiary}
           secureTextEntry={isPassword && !isPasswordVisible}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          multiline={multiline}
           {...props}
         />
 

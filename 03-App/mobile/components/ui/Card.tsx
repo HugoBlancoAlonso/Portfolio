@@ -3,7 +3,9 @@
  */
 
 import React from 'react';
-import { StyleSheet, View, ViewStyle, useColorScheme } from 'react-native';
+import { StyleSheet, View, ViewStyle } from 'react-native';
+import { useAppTheme } from '../../hooks/useAppTheme';
+
 
 import { Colors } from '../../constants/Colors';
 
@@ -20,9 +22,7 @@ export function Card({
   variant = 'default',
   padding = 16,
 }: CardProps) {
-  const _colorScheme = useColorScheme();
-  const colorScheme = _colorScheme === 'dark' ? 'dark' : 'light';
-  const colors = Colors[colorScheme];
+  const { colors, activeTheme: colorScheme } = useAppTheme();
 
   const variantStyles: Record<string, ViewStyle> = {
     default: {

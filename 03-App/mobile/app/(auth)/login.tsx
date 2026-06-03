@@ -13,31 +13,35 @@ import {
   StyleSheet,
   Text,
   View,
-  useColorScheme,
 } from 'react-native';
 
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Colors } from '../../constants/Colors';
 import { useAuth } from '../../hooks/useAuth';
+import { useAppTheme } from '../../hooks/useAppTheme';
 
 export default function LoginScreen() {
-  const _colorScheme = useColorScheme();
-  const colorScheme = _colorScheme === 'dark' ? 'dark' : 'light';
-  const colors = Colors[colorScheme];
+  const { colors, activeTheme: colorScheme } = useAppTheme();
   const router = useRouter();
   const { login, isLoading, error, clearError } = useAuth();
 
-  const [email, setEmail] = useState('');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
-    if (!email.trim() || !password.trim()) {
+    if (!identifier.trim() || !password.trim()) {
       Alert.alert('Error', 'Por favor completa todos los campos');
       return;
     }
+    
     try {
-      await login({ email: email.trim(), password });
+      const payload: any = { 
+        identifier: identifier.trim(),
+        password 
+      };
+      
+      await login(payload);
     } catch {
       // Error is handled by the store
     }
@@ -89,15 +93,15 @@ export default function LoginScreen() {
         {/* ─── Form ────────────────────────────────────────────── */}
         <View style={styles.form}>
           <Input
-            label="Email"
-            placeholder="tu@email.com"
-            keyboardType="email-address"
+            label="Email, teléfono o usuario"
+            placeholder="tu@email.com, +34... o usuario"
+            keyboardType="default"
             autoCapitalize="none"
             autoComplete="email"
-            icon="mail-outline"
-            value={email}
+            icon="person-outline"
+            value={identifier}
             onChangeText={(text) => {
-              setEmail(text);
+              setIdentifier(text);
               clearError();
             }}
           />
@@ -115,6 +119,15 @@ export default function LoginScreen() {
             }}
           />
 
+          <View style={styles.forgotPasswordContainer}>
+            <Text 
+              style={[styles.forgotPasswordText, { color: colors.primary }]}
+              onPress={() => Alert.alert('Recuperar contraseña', 'Funcionalidad próximamente')}
+            >
+              ¿Olvidaste tu contraseña?
+            </Text>
+          </View>
+
           <Button
             title="Iniciar Sesión"
             onPress={handleLogin}
@@ -125,6 +138,7 @@ export default function LoginScreen() {
         </View>
 
         {/* ─── Divider ─────────────────────────────────────────── */}
+        {/*
         <View style={styles.divider}>
           <View style={[styles.dividerLine, { backgroundColor: colors.border }]} />
           <Text style={[styles.dividerText, { color: colors.textTertiary }]}>
@@ -133,7 +147,6 @@ export default function LoginScreen() {
           <View style={[styles.dividerLine, { backgroundColor: colors.border }]} />
         </View>
 
-        {/* ─── Social Login ────────────────────────────────────── */}
         <View style={styles.socialButtons}>
           <Button
             title="Google"
@@ -166,6 +179,7 @@ export default function LoginScreen() {
             />
           )}
         </View>
+        */}
 
         {/* ─── Footer ──────────────────────────────────────────── */}
         <View style={styles.footer}>
@@ -229,6 +243,24 @@ const styles = StyleSheet.create({
   },
   form: {
     gap: 4,
+  },
+  forgotPasswordContainer: {
+    alignItems: 'flex-end',
+    marginBottom: 8,
+    marginTop: -4,
+  },
+  forgotPasswordText: {
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  toggleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 16,
+  },
+  toggleText: {
+    fontSize: 16,
+    paddingHorizontal: 8,
   },
   divider: {
     flexDirection: 'row',

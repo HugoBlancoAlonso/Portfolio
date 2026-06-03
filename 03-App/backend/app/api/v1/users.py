@@ -30,8 +30,10 @@ async def get_my_profile(
         **{
             "id": current_user.id,
             "email": current_user.email,
+            "username": current_user.username,
             "full_name": current_user.full_name,
             "avatar_url": current_user.avatar_url,
+            "bio": current_user.bio,
             "is_active": current_user.is_active,
             "is_verified": current_user.is_verified,
             "created_at": current_user.created_at,
@@ -53,8 +55,10 @@ async def update_my_profile(
         **{
             "id": user.id,
             "email": user.email,
+            "username": user.username,
             "full_name": user.full_name,
             "avatar_url": user.avatar_url,
+            "bio": user.bio,
             "is_active": user.is_active,
             "is_verified": user.is_verified,
             "created_at": user.created_at,
@@ -107,8 +111,10 @@ async def update_avatar(
         **{
             "id": current_user.id,
             "email": current_user.email,
+            "username": current_user.username,
             "full_name": current_user.full_name,
             "avatar_url": current_user.avatar_url,
+            "bio": current_user.bio,
             "is_active": current_user.is_active,
             "is_verified": current_user.is_verified,
             "created_at": current_user.created_at,
@@ -143,8 +149,10 @@ async def get_user_profile(
         **{
             "id": user.id,
             "email": user.email,
+            "username": user.username,
             "full_name": user.full_name,
             "avatar_url": user.avatar_url,
+            "bio": user.bio,
             "is_active": user.is_active,
             "is_verified": user.is_verified,
             "created_at": user.created_at,

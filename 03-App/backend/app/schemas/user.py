@@ -12,9 +12,12 @@ class UserResponse(BaseModel):
     """Public user data returned by the API."""
 
     id: uuid.UUID
-    email: EmailStr
-    full_name: str
+    email: EmailStr | None = None
+    username: str | None = None
+    phone_number: str | None = None
+    full_name: str | None = None
     avatar_url: str | None = None
+    bio: str | None = None
     is_active: bool
     is_verified: bool
     created_at: datetime
@@ -34,14 +37,19 @@ class UserUpdate(BaseModel):
     """Fields that can be updated by the user."""
 
     full_name: str | None = Field(None, min_length=1, max_length=255)
+    username: str | None = Field(None, min_length=4, max_length=50)
     avatar_url: str | None = None
+    bio: str | None = Field(None, max_length=500)
+    email: EmailStr | None = None
+    phone_number: str | None = Field(None, min_length=5, max_length=20)
 
 
 class UserBriefResponse(BaseModel):
     """Minimal user info for embedding in posts, comments, etc."""
 
     id: uuid.UUID
-    full_name: str
+    username: str | None = None
+    full_name: str | None = None
     avatar_url: str | None = None
 
     model_config = {"from_attributes": True}

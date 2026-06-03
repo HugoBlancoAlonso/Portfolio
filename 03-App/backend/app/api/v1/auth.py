@@ -8,7 +8,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.exceptions import BadRequestException, UnauthorizedException
 from app.core.oauth import verify_apple_token, verify_google_token
-from app.core.security import create_token_pair, decode_token
+from app.core.security import create_token_pair, decode_token, verify_password, hash_password
+from app.database import get_db
+from app.api.deps import get_current_user
+from app.models.user import User
 from app.database import get_db
 from app.schemas.auth import (
     AppleLoginRequest,
@@ -17,6 +20,7 @@ from app.schemas.auth import (
     RefreshRequest,
     RegisterRequest,
     TokenResponse,
+    ChangePasswordRequest,
 )
 from app.services import user_service
 
@@ -28,23 +32,46 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 @router.post("/register", response_model=TokenResponse, status_code=201)
 async def register(data: RegisterRequest, db: AsyncSession = Depends(get_db)):
-    """Register a new user with email and password."""
+    """Register a new user with email/phone and password."""
     user = await user_service.create_user(
         db,
         email=data.email,
+        phone_number=data.phone_number,
         password=data.password,
-        full_name=data.full_name,
+        username=data.username,
     )
     return create_token_pair(user.id)
 
 
 @router.post("/login", response_model=TokenResponse)
 async def login(data: LoginRequest, db: AsyncSession = Depends(get_db)):
-    """Login with email and password."""
-    user = await user_service.authenticate_user(db, data.email, data.password)
+    """Login with email, phone or username and password."""
+    user = await user_service.authenticate_user(db, data.identifier, data.password)
     if not user:
-        raise UnauthorizedException("Invalid email or password")
+        raise UnauthorizedException("Usuario no encontrado")
     return create_token_pair(user.id)
+
+
+@router.put("/password", response_model=dict)
+async def change_password(
+    data: ChangePasswordRequest,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Change the user's password."""
+    if not current_user.hashed_password:
+        raise BadRequestException("OAuth users cannot change password this way")
+        
+    if not verify_password(data.current_password, current_user.hashed_password):
+        raise BadRequestException("Current password is incorrect")
+        
+    if data.current_password == data.new_password:
+        raise BadRequestException("New password cannot be the same as the current password")
+        
+    current_user.hashed_password = hash_password(data.new_password)
+    await db.flush()
+    
+    return {"message": "Password changed successfully"}
 
 
 @router.post("/refresh", response_model=TokenResponse)

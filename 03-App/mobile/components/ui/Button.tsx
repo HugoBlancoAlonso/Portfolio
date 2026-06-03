@@ -10,8 +10,8 @@ import {
   Text,
   ViewStyle,
 } from 'react-native';
-import { useColorScheme } from 'react-native';
 
+import { useAppTheme } from '../../hooks/useAppTheme';
 import { Colors } from '../../constants/Colors';
 
 type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
@@ -40,9 +40,7 @@ export function Button({
   style,
   icon,
 }: ButtonProps) {
-  const _colorScheme = useColorScheme();
-  const colorScheme = _colorScheme === 'dark' ? 'dark' : 'light';
-  const colors = Colors[colorScheme];
+  const { colors, activeTheme: colorScheme } = useAppTheme();
   const isDisabled = disabled || loading;
 
   const buttonStyles = getButtonStyles(variant, size, colors, fullWidth, isDisabled);

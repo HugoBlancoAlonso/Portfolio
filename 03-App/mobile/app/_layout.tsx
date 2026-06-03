@@ -5,12 +5,20 @@
 
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useFonts } from 'expo-font';
-import { Slot, useRouter, useSegments } from 'expo-router';
+import { Stack, useRouter, useSegments } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
 
+import { LogBox } from 'react-native';
+
 import { Loading } from '../components/ui/Loading';
 import { useAuth } from '../hooks/useAuth';
+
+// Ignore expo-notifications warnings in Expo Go
+LogBox.ignoreLogs([
+  'expo-notifications: Android Push notifications',
+  '`expo-notifications` functionality is not fully supported in Expo Go',
+]);
 
 // Keep splash screen visible while loading
 SplashScreen.preventAutoHideAsync();
@@ -55,5 +63,11 @@ export default function RootLayout() {
     return <Loading fullScreen message="Cargando..." />;
   }
 
-  return <Slot />;
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(auth)" />
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="(settings)" options={{ presentation: 'card' }} />
+    </Stack>
+  );
 }

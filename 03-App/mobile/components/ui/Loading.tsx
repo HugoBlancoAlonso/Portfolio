@@ -8,10 +8,9 @@ import {
   StyleSheet,
   Text,
   View,
-  useColorScheme,
 } from 'react-native';
 
-import { Colors } from '../../constants/Colors';
+import { useAppTheme } from '../../hooks/useAppTheme';
 
 interface LoadingProps {
   message?: string;
@@ -24,9 +23,7 @@ export function Loading({
   fullScreen = false,
   size = 'large',
 }: LoadingProps) {
-  const _colorScheme = useColorScheme();
-  const colorScheme = _colorScheme === 'dark' ? 'dark' : 'light';
-  const colors = Colors[colorScheme];
+  const { colors, activeTheme: colorScheme } = useAppTheme();
 
   return (
     <View

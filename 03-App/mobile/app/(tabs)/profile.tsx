@@ -9,19 +9,25 @@ import {
   StyleSheet,
   Text,
   View,
-  useColorScheme,
+  Image,
 } from 'react-native';
 
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { Colors } from '../../constants/Colors';
+import { Config } from '../../constants/Config';
 import { useAuth } from '../../hooks/useAuth';
+import { useAppTheme } from '../../hooks/useAppTheme';
+import { useRouter } from 'expo-router';
 
 export default function ProfileScreen() {
-  const _colorScheme = useColorScheme();
-  const colorScheme = _colorScheme === 'dark' ? 'dark' : 'light';
-  const colors = Colors[colorScheme];
+  const { colors, activeTheme: colorScheme } = useAppTheme();
   const { user } = useAuth();
+  const router = useRouter();
+
+  const displayAvatar = user?.avatar_url 
+    ? (user.avatar_url.startsWith('http') ? user.avatar_url : `${Config.API_BASE_URL}${user.avatar_url}`) 
+    : null;
 
   return (
     <ScrollView
@@ -29,28 +35,40 @@ export default function ProfileScreen() {
       contentContainerStyle={styles.content}
       showsVerticalScrollIndicator={false}
     >
-      {/* ─── Avatar ────────────────────────────────────────────── */}
-      <View style={styles.avatarSection}>
-        <View
-          style={[
-            styles.avatar,
-            { backgroundColor: colors.primaryLight, borderColor: colors.primary },
-          ]}
-        >
-          {user?.avatar_url ? (
-            <Ionicons name="person" size={40} color={colors.primary} />
-          ) : (
-            <Text style={[styles.avatarText, { color: colors.primary }]}>
-              {user?.full_name?.charAt(0)?.toUpperCase() || '?'}
+      {/* ─── Profile Header ────────────────────────────────────────────── */}
+      <View style={styles.headerContainer}>
+        <View style={styles.avatarWrapper}>
+          <View
+            style={[
+              styles.avatar,
+              { backgroundColor: colors.primaryLight, borderColor: colors.primary },
+            ]}
+          >
+            {displayAvatar ? (
+              <Image source={{ uri: displayAvatar }} style={styles.avatarImage} />
+            ) : (
+              <Text style={[styles.avatarText, { color: colors.primary }]}>
+                {user?.full_name?.charAt(0)?.toUpperCase() || '?'}
+              </Text>
+            )}
+          </View>
+        </View>
+
+        <View style={[styles.infoBox, { backgroundColor: colors.backgroundSecondary }]}>
+          <Text style={[styles.username, { color: colors.text }]} numberOfLines={1}>
+            {user?.username ? `@${user.username}` : user?.full_name || 'Usuario'}
+          </Text>
+          {user?.username && (
+            <Text style={[styles.fullName, { color: colors.textSecondary }]} numberOfLines={1}>
+              {user?.full_name}
+            </Text>
+          )}
+          {user?.bio && (
+            <Text style={[styles.bio, { color: colors.text }]} numberOfLines={4}>
+              {user.bio}
             </Text>
           )}
         </View>
-        <Text style={[styles.name, { color: colors.text }]}>
-          {user?.full_name || 'Usuario'}
-        </Text>
-        <Text style={[styles.email, { color: colors.textSecondary }]}>
-          {user?.email || ''}
-        </Text>
       </View>
 
       {/* ─── Stats ─────────────────────────────────────────────── */}
@@ -90,7 +108,7 @@ export default function ProfileScreen() {
         <Button
           title="Editar Perfil"
           onPress={() => {
-            // TODO: Navigate to edit profile
+            router.push('/(settings)/edit-profile');
           }}
           variant="outline"
           fullWidth
@@ -126,31 +144,51 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 40,
   },
-  avatarSection: {
-    alignItems: 'center',
+  headerContainer: {
+    flexDirection: 'row',
     marginBottom: 24,
+    alignItems: 'center',
+  },
+  avatarWrapper: {
+    marginRight: 16,
   },
   avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 90,
+    height: 90,
+    borderRadius: 45,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 3,
-    marginBottom: 16,
+  },
+  avatarImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 45,
   },
   avatarText: {
-    fontSize: 36,
+    fontSize: 32,
     fontWeight: '700',
   },
-  name: {
-    fontSize: 24,
+  infoBox: {
+    flex: 1,
+    padding: 16,
+    borderRadius: 16,
+    minHeight: 100,
+    justifyContent: 'center',
+  },
+  username: {
+    fontSize: 20,
     fontWeight: '700',
     letterSpacing: -0.3,
   },
-  email: {
+  fullName: {
     fontSize: 14,
-    marginTop: 4,
+    marginTop: 2,
+  },
+  bio: {
+    fontSize: 14,
+    marginTop: 8,
+    lineHeight: 20,
   },
   statsCard: {
     marginBottom: 20,

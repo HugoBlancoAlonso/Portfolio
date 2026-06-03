@@ -8,6 +8,7 @@ import type {
   RegisterRequest,
   TokenResponse,
   UserProfile,
+  MessageResponse,
 } from '../types';
 
 export const authService = {
@@ -66,6 +67,42 @@ export const authService = {
    */
   getProfile: async (): Promise<UserProfile> => {
     const response = await api.get<UserProfile>('/users/me');
+    return response.data;
+  },
+
+  /**
+   * Change user password.
+   */
+  changePassword: async (data: any): Promise<MessageResponse> => {
+    const response = await api.put<MessageResponse>('/auth/password', data);
+    return response.data;
+  },
+
+  /**
+   * Update user profile.
+   */
+  updateProfile: async (data: any): Promise<UserProfile> => {
+    const response = await api.put<UserProfile>('/users/me', data);
+    return response.data;
+  },
+
+  /**
+   * Update user avatar image.
+   */
+  updateAvatar: async (formData: FormData): Promise<UserProfile> => {
+    const response = await api.put<UserProfile>('/users/me/avatar', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  },
+
+  /**
+   * Delete account.
+   */
+  deleteAccount: async (): Promise<MessageResponse> => {
+    const response = await api.delete<MessageResponse>('/users/me');
     return response.data;
   },
 };

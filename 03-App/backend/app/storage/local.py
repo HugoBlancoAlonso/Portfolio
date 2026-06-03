@@ -59,7 +59,9 @@ class LocalStorage(StorageBackend):
         Return the URL path for accessing a stored file.
         The actual serving is handled by FastAPI's StaticFiles mount.
         """
-        return f"/uploads/{file_path}"
+        # Ensure we use forward slashes for web URLs even on Windows
+        normalized_path = file_path.replace("\\", "/")
+        return f"/uploads/{normalized_path}"
 
     async def file_exists(self, file_path: str) -> bool:
         """Check if a file exists on local disk."""

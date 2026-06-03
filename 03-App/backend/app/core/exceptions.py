@@ -25,10 +25,10 @@ class NotFoundException(AppException):
 class AlreadyExistsException(AppException):
     """Resource already exists (409)."""
 
-    def __init__(self, resource: str = "Resource"):
+    def __init__(self, detail: str = "Resource already exists"):
         super().__init__(
             status_code=status.HTTP_409_CONFLICT,
-            detail=f"{resource} already exists",
+            detail=detail,
         )
 
 
