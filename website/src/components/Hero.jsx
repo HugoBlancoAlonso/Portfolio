@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiEye, FiArrowDown } from 'react-icons/fi';
-import { HiOutlineSparkles } from 'react-icons/hi';
+import { FiArrowDown, FiDownload, FiBriefcase } from 'react-icons/fi';
 import { useLanguage } from '../i18n/LanguageContext';
 import PdfPreviewModal from './PdfPreviewModal';
 import '../styles/hero.css';
@@ -15,92 +14,70 @@ export default function Hero() {
   };
 
   return (
-    <section className="hero section" id="home">
-      {/* Background orbs */}
-      <div className="hero-bg">
-        <div className="hero-orb hero-orb-1" />
-        <div className="hero-orb hero-orb-2" />
-        <div className="hero-orb hero-orb-3" />
-      </div>
+    <section id="home" className="hero">
+      <div className="hero-content bento-grid hero-bento">
+        {/* Main Identity Box */}
+        <motion.div
+          className="glass-card bento-main"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <span className="hero-subtitle">{t.hero.role}</span>
+          <h1 className="hero-title">
+            Hugo Blanco <span className="highlight">Alonso</span>
+          </h1>
+          <p className="hero-description">{t.hero.description}</p>
+        </motion.div>
 
-      <div className="container hero-content">
-        <motion.p
-          className="hero-greeting"
+        {/* Call to Action Box */}
+        <motion.div
+          className="glass-card bento-cta"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          <h2 className="bento-cta-title">Let's build something</h2>
+          <button className="btn btn-primary" onClick={scrollToProjects}>
+            <FiBriefcase /> {t.hero.cta_projects}
+          </button>
+          <button className="btn btn-outline" onClick={() => setCvOpen(true)}>
+            <FiDownload /> {t.hero.cta_cv}
+          </button>
+        </motion.div>
+
+        {/* Stats Boxes */}
+        <motion.div
+          className="glass-card bento-stat"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          {t.hero.greeting}
-        </motion.p>
-
-        <motion.h1
-          className="hero-name"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.35 }}
-        >
-          {t.hero.name}
-        </motion.h1>
-
-        <motion.h2
-          className="hero-title"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-        >
-          {t.hero.title}
-        </motion.h2>
-
-        <motion.p
-          className="hero-subtitle"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-        >
-          <HiOutlineSparkles style={{ verticalAlign: 'middle', marginRight: '6px' }} />
-          {t.hero.subtitle}
-        </motion.p>
-
-        <motion.p
-          className="hero-description"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.7 }}
-        >
-          {t.hero.description}
-        </motion.p>
+          <h3>4+</h3>
+          <p>Key Projects</p>
+        </motion.div>
 
         <motion.div
-          className="hero-ctas"
+          className="glass-card bento-stat"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.85 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <button className="btn btn-primary" onClick={scrollToProjects}>
-            <HiOutlineSparkles />
-            {t.hero.cta_projects}
-          </button>
-          <button
-            className="btn btn-outline"
-            onClick={() => setCvOpen(true)}
-          >
-            <FiEye />
-            {t.hero.cta_cv}
-          </button>
+          <h3>20+</h3>
+          <p>Technologies</p>
         </motion.div>
-      </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        className="hero-scroll-indicator"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.8 }}
-        onClick={scrollToProjects}
-      >
-        <FiArrowDown />
-        <div className="scroll-line" />
-      </motion.div>
+        <motion.div
+          className="glass-card bento-stat"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <h3>100%</h3>
+          <p>Commitment</p>
+        </motion.div>
+
+      </div>
 
       <PdfPreviewModal
         isOpen={cvOpen}
