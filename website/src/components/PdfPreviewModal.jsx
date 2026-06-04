@@ -1,16 +1,37 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiX, FiDownload, FiFileText, FiExternalLink } from 'react-icons/fi';
+import { FiX, FiDownload, FiFileText, FiExternalLink, FiChevronLeft, FiChevronRight, FiZoomIn, FiZoomOut } from 'react-icons/fi';
 import { useLanguage } from '../i18n/LanguageContext';
+import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
 import '../styles/pdf-preview.css';
+
+// Use UNPKG for the worker so it works perfectly regardless of the bundler configuration
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 export default function PdfPreviewModal({ isOpen, onClose, url, title }) {
   const { language } = useLanguage();
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [scale, setScale] = useState(1.2);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1000);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Responsive scale
+  const actualScale = windowWidth < 768 ? 0.6 : scale;
 
   // Close on Escape key
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight' && numPages && pageNumber < numPages) setPageNumber(prev => prev + 1);
+      if (e.key === 'ArrowLeft' && pageNumber > 1) setPageNumber(prev => prev - 1);
     };
     if (isOpen) {
       document.addEventListener('keydown', handleKeyDown);
@@ -19,8 +40,21 @@ export default function PdfPreviewModal({ isOpen, onClose, url, title }) {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
+      // Reset state when closed
+      setPageNumber(1);
+      setScale(1.2);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, numPages, pageNumber]);
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+    setPageNumber(1);
+  }
+
+  const zoomIn = () => setScale(prev => Math.min(prev + 0.2, 3.0));
+  const zoomOut = () => setScale(prev => Math.max(prev - 0.2, 0.5));
+  const prevPage = () => setPageNumber(prev => Math.max(prev - 1, 1));
+  const nextPage = () => setPageNumber(prev => Math.min(prev + 1, numPages || 1));
 
   return (
     <AnimatePresence>
@@ -57,7 +91,7 @@ export default function PdfPreviewModal({ isOpen, onClose, url, title }) {
                   style={{ background: 'rgba(108, 99, 255, 0.1)', color: 'var(--color-primary-light)' }}
                 >
                   <FiExternalLink />
-                  <span>{language === 'es' ? 'Abrir en pestaña' : 'Open in tab'}</span>
+                  <span>{language === 'es' ? 'Abrir' : 'Open'}</span>
                 </a>
                 <a
                   href={url}
@@ -74,15 +108,50 @@ export default function PdfPreviewModal({ isOpen, onClose, url, title }) {
               </div>
             </div>
 
-            {/* PDF Viewer */}
+            {/* React PDF Viewer */}
             <div className="pdf-preview-body">
-              <embed
-                src={url}
-                type="application/pdf"
-                width="100%"
-                height="100%"
-                title={title}
-              />
+              <Document
+                file={url}
+                onLoadSuccess={onDocumentLoadSuccess}
+                loading={
+                  <div className="pdf-loader">
+                    <div className="pdf-loader-spinner" />
+                    <p>{language === 'es' ? 'Cargando documento...' : 'Loading document...'}</p>
+                  </div>
+                }
+                className="pdf-document-wrapper"
+              >
+                <Page
+                  pageNumber={pageNumber}
+                  scale={actualScale}
+                  renderTextLayer={true}
+                  renderAnnotationLayer={true}
+                />
+              </Document>
+              
+              {/* Pagination and Zoom Controls */}
+              {numPages && (
+                <div className="pdf-controls">
+                  <button className="pdf-action-btn icon-only" onClick={zoomOut} title="Zoom Out">
+                    <FiZoomOut />
+                  </button>
+                  <button className="pdf-action-btn icon-only" onClick={zoomIn} title="Zoom In">
+                    <FiZoomIn />
+                  </button>
+                  
+                  <div style={{ width: '1px', height: '24px', background: 'var(--border-subtle)', margin: '0 8px' }} />
+
+                  <button className="pdf-action-btn icon-only" onClick={prevPage} disabled={pageNumber <= 1}>
+                    <FiChevronLeft />
+                  </button>
+                  <span>
+                    {pageNumber} / {numPages}
+                  </span>
+                  <button className="pdf-action-btn icon-only" onClick={nextPage} disabled={pageNumber >= numPages}>
+                    <FiChevronRight />
+                  </button>
+                </div>
+              )}
             </div>
           </motion.div>
         </motion.div>
