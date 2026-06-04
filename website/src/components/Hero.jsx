@@ -3,10 +3,12 @@ import { motion } from 'framer-motion';
 import { FiEye, FiArrowDown } from 'react-icons/fi';
 import { HiOutlineSparkles } from 'react-icons/hi';
 import { useLanguage } from '../i18n/LanguageContext';
+import DocumentViewerModal from './DocumentViewerModal';
 import '../styles/hero.css';
 
 export default function Hero() {
   const { t } = useLanguage();
+  const [cvOpen, setCvOpen] = useState(false);
 
   const scrollToProjects = () => {
     document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
@@ -78,16 +80,13 @@ export default function Hero() {
             <HiOutlineSparkles />
             {t.hero.cta_projects}
           </button>
-          <a
+          <button
             className="btn btn-outline"
-            href="https://github.com/HugoBlancoAlonso/Portfolio/blob/main/HugoBlancoAlonsoCV.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ textDecoration: 'none' }}
+            onClick={() => setCvOpen(true)}
           >
             <FiEye />
             {t.hero.cta_cv}
-          </a>
+          </button>
         </motion.div>
       </div>
 
@@ -103,6 +102,14 @@ export default function Hero() {
         <div className="scroll-line" />
       </motion.div>
 
+      {/* Native HTML Document Viewer Modal */}
+      <DocumentViewerModal
+        isOpen={cvOpen}
+        onClose={() => setCvOpen(false)}
+        docId="cv"
+        title="Curriculum Vitae — Hugo Blanco Alonso"
+        downloadUrl="/HugoBlancoAlonsoCV.pdf"
+      />
     </section>
   );
 }
