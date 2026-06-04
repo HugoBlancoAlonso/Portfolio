@@ -16,6 +16,7 @@ export const projects = {
         'Behavior Trees',
       ],
       category: 'gamedev',
+      image: '/projects/doom.png',
       githubUrl: 'https://github.com/HugoBlancoAlonso/Portfolio/tree/main/00-RemasterDoomUR5',
       youtubeVideos: [
         'https://youtu.be/gsX6vk6bzFo',
@@ -49,6 +50,7 @@ export const projects = {
         'Sentence Transformers',
       ],
       category: 'ai',
+      image: '/projects/contracts.png',
       githubUrl: 'https://github.com/HugoBlancoAlonso/Portfolio/tree/main/01-AnalizadorContratos',
       comingSoon: false,
       highlights: [
@@ -74,6 +76,7 @@ export const projects = {
         'Dashboard',
       ],
       category: 'data',
+      image: '/projects/energy.png',
       githubUrl: 'https://github.com/HugoBlancoAlonso/Portfolio/tree/main/02-PrediccionGeneraci%C3%B3nElectrica',
       comingSoon: false,
       highlights: [
@@ -99,6 +102,7 @@ export const projects = {
         'TypeScript',
       ],
       category: 'fullstack',
+      image: '/projects/social.png',
       githubUrl: '',
       comingSoon: true,
       highlights: [
@@ -125,6 +129,7 @@ export const projects = {
         'Behavior Trees',
       ],
       category: 'gamedev',
+      image: '/projects/doom.png',
       githubUrl: 'https://github.com/HugoBlancoAlonso/Portfolio/tree/main/00-RemasterDoomUR5',
       youtubeVideos: [
         'https://youtu.be/gsX6vk6bzFo',
@@ -158,6 +163,7 @@ export const projects = {
         'Sentence Transformers',
       ],
       category: 'ai',
+      image: '/projects/contracts.png',
       githubUrl: 'https://github.com/HugoBlancoAlonso/Portfolio/tree/main/01-AnalizadorContratos',
       comingSoon: false,
       highlights: [
@@ -183,6 +189,7 @@ export const projects = {
         'Dashboard',
       ],
       category: 'data',
+      image: '/projects/energy.png',
       githubUrl: 'https://github.com/HugoBlancoAlonso/Portfolio/tree/main/02-PrediccionGeneraci%C3%B3nElectrica',
       comingSoon: false,
       highlights: [
@@ -208,6 +215,7 @@ export const projects = {
         'TypeScript',
       ],
       category: 'fullstack',
+      image: '/projects/social.png',
       githubUrl: '',
       comingSoon: true,
       highlights: [
