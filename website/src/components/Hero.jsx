@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { FiEye, FiArrowDown } from 'react-icons/fi';
 import { HiOutlineSparkles } from 'react-icons/hi';
 import { useLanguage } from '../i18n/LanguageContext';
-import CvPreview from './CvPreview';
+import PdfPreviewModal from './PdfPreviewModal';
 import '../styles/hero.css';
 
 export default function Hero() {
@@ -103,7 +103,12 @@ export default function Hero() {
       </motion.div>
 
       {/* CV Preview Modal */}
-      <CvPreview isOpen={cvOpen} onClose={() => setCvOpen(false)} />
+      <PdfPreviewModal
+        isOpen={cvOpen}
+        onClose={() => setCvOpen(false)}
+        url="/HugoBlancoAlonsoCV.pdf"
+        title="Curriculum Vitae — Hugo Blanco Alonso"
+      />
     </section>
   );
 }

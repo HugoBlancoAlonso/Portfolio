@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX, FiDownload, FiFileText } from 'react-icons/fi';
 import { useLanguage } from '../i18n/LanguageContext';
-import '../styles/cv-preview.css';
+import '../styles/pdf-preview.css';
 
-export default function CvPreview({ isOpen, onClose }) {
+export default function PdfPreviewModal({ isOpen, onClose, url, title }) {
   const { language } = useLanguage();
 
   // Close on Escape key
@@ -26,7 +26,7 @@ export default function CvPreview({ isOpen, onClose }) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="cv-preview-overlay"
+          className="pdf-preview-overlay"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -36,28 +36,28 @@ export default function CvPreview({ isOpen, onClose }) {
           }}
         >
           <motion.div
-            className="cv-preview-container"
+            className="pdf-preview-container"
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
           >
             {/* Header */}
-            <div className="cv-preview-header">
-              <div className="cv-preview-title">
+            <div className="pdf-preview-header">
+              <div className="pdf-preview-title">
                 <FiFileText />
-                <span>Curriculum Vitae — Hugo Blanco Alonso</span>
+                <span>{title}</span>
               </div>
-              <div className="cv-preview-actions">
+              <div className="pdf-preview-actions">
                 <a
-                  href="/HugoBlancoAlonsoCV.pdf"
+                  href={url}
                   download
-                  className="cv-action-btn download"
+                  className="pdf-action-btn download"
                 >
                   <FiDownload />
                   <span>{language === 'es' ? 'Descargar' : 'Download'}</span>
                 </a>
-                <button className="cv-action-btn close" onClick={onClose}>
+                <button className="pdf-action-btn close" onClick={onClose}>
                   <FiX />
                   <span>{language === 'es' ? 'Cerrar' : 'Close'}</span>
                 </button>
@@ -65,10 +65,10 @@ export default function CvPreview({ isOpen, onClose }) {
             </div>
 
             {/* PDF Viewer */}
-            <div className="cv-preview-body">
+            <div className="pdf-preview-body">
               <iframe
-                src="/HugoBlancoAlonsoCV.pdf"
-                title="CV Preview"
+                src={url}
+                title={title}
                 loading="lazy"
               />
             </div>

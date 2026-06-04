@@ -1,5 +1,5 @@
-/* --- CV Preview --- */
-.cv-preview-overlay {
+/* --- PDF Preview --- */
+.pdf-preview-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -15,7 +15,7 @@
   padding: var(--space-xl);
 }
 
-.cv-preview-container {
+.pdf-preview-container {
   position: relative;
   width: 100%;
   max-width: 900px;
@@ -29,7 +29,7 @@
   box-shadow: var(--shadow-xl);
 }
 
-.cv-preview-header {
+.pdf-preview-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -39,7 +39,7 @@
   flex-shrink: 0;
 }
 
-.cv-preview-title {
+.pdf-preview-title {
   font-size: var(--text-base);
   font-weight: 600;
   color: var(--text-primary);
@@ -48,13 +48,13 @@
   gap: var(--space-sm);
 }
 
-.cv-preview-actions {
+.pdf-preview-actions {
   display: flex;
   align-items: center;
   gap: var(--space-md);
 }
 
-.cv-action-btn {
+.pdf-action-btn {
   display: flex;
   align-items: center;
   gap: var(--space-xs);
@@ -68,73 +68,54 @@
   text-decoration: none;
 }
 
-.cv-action-btn.download {
+.pdf-action-btn.download {
   background: var(--gradient-primary);
   color: white;
 }
 
-.cv-action-btn.download:hover {
+.pdf-action-btn.download:hover {
   box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
 }
 
-.cv-action-btn.close {
+.pdf-action-btn.close {
   background: transparent;
   color: var(--text-secondary);
   border: 1px solid var(--border-subtle);
 }
 
-.cv-action-btn.close:hover {
+.pdf-action-btn.close:hover {
   color: var(--text-primary);
   border-color: var(--border-medium);
   background: rgba(108, 99, 255, 0.05);
 }
 
-.cv-preview-body {
+.pdf-preview-body {
   flex: 1;
   overflow: hidden;
 }
 
-.cv-preview-body iframe,
-.cv-preview-body object {
+.pdf-preview-body iframe {
   width: 100%;
   height: 100%;
   border: none;
 }
 
-/* Fallback message */
-.cv-preview-fallback {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  gap: var(--space-lg);
-  color: var(--text-secondary);
-  padding: var(--space-2xl);
-  text-align: center;
-}
-
-.cv-preview-fallback-icon {
-  font-size: var(--text-5xl);
-  color: var(--color-primary);
-}
-
 @media (max-width: 768px) {
-  .cv-preview-overlay {
+  .pdf-preview-overlay {
     padding: 0;
   }
 
-  .cv-preview-container {
+  .pdf-preview-container {
     border-radius: 0;
     height: 100vh;
     max-width: 100%;
   }
 
-  .cv-preview-header {
+  .pdf-preview-header {
     padding: var(--space-md);
   }
 
-  .cv-action-btn span {
+  .pdf-action-btn span {
     display: none;
   }
 }
