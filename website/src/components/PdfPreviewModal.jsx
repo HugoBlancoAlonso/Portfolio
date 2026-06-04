@@ -7,9 +7,11 @@ import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import '../styles/pdf-preview.css';
 
-// Configurar el worker como Asset de Vite (muy seguro)
-import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
-pdfjs.GlobalWorkerOptions.workerSrc = pdfWorker;
+// Configurar el worker usando el estándar oficial de Vite para react-pdf
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url,
+).toString();
 
 export default function PdfPreviewModal({ isOpen, onClose, url, title }) {
   const { language } = useLanguage();
@@ -17,6 +19,27 @@ export default function PdfPreviewModal({ isOpen, onClose, url, title }) {
   const [pageNumber, setPageNumber] = useState(1);
   const [scale, setScale] = useState(1.2);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1000);
+  const [pdfBlob, setPdfBlob] = useState(null);
+  const [loadError, setLoadError] = useState(null);
+
+  // Fetch the PDF manually as a blob to bypass any server Range-request bugs or CORS issues in pdf.js
+  useEffect(() => {
+    if (isOpen && url) {
+      setPdfBlob(null);
+      setLoadError(null);
+      
+      fetch(url)
+        .then((res) => {
+          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+          return res.blob();
+        })
+        .then((blob) => setPdfBlob(blob))
+        .catch((e) => {
+          console.error('Fetch error:', e);
+          setLoadError(e.message);
+        });
+    }
+  }, [isOpen, url]);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -111,25 +134,36 @@ export default function PdfPreviewModal({ isOpen, onClose, url, title }) {
 
             {/* React PDF Viewer */}
             <div className="pdf-preview-body">
-              <Document
-                file={typeof window !== 'undefined' ? `${window.location.origin}${url}` : url}
-                onLoadSuccess={onDocumentLoadSuccess}
-                onLoadError={(error) => console.error('Error loading PDF:', error)}
-                loading={
-                  <div className="pdf-loader">
-                    <div className="pdf-loader-spinner" />
-                    <p>{language === 'es' ? 'Cargando documento...' : 'Loading document...'}</p>
-                  </div>
-                }
-                className="pdf-document-wrapper"
-              >
-                <Page
-                  pageNumber={pageNumber}
-                  scale={actualScale}
-                  renderTextLayer={true}
-                  renderAnnotationLayer={true}
-                />
-              </Document>
+              {loadError ? (
+                <div className="pdf-loader" style={{ color: 'var(--color-error)' }}>
+                  <p>{language === 'es' ? 'Error cargando documento: ' : 'Error loading document: '} {loadError}</p>
+                </div>
+              ) : pdfBlob ? (
+                <Document
+                  file={pdfBlob}
+                  onLoadSuccess={onDocumentLoadSuccess}
+                  onLoadError={(error) => console.error('Error rendering PDF:', error)}
+                  loading={
+                    <div className="pdf-loader">
+                      <div className="pdf-loader-spinner" />
+                      <p>{language === 'es' ? 'Renderizando PDF...' : 'Rendering PDF...'}</p>
+                    </div>
+                  }
+                  className="pdf-document-wrapper"
+                >
+                  <Page
+                    pageNumber={pageNumber}
+                    scale={actualScale}
+                    renderTextLayer={true}
+                    renderAnnotationLayer={true}
+                  />
+                </Document>
+              ) : (
+                <div className="pdf-loader">
+                  <div className="pdf-loader-spinner" />
+                  <p>{language === 'es' ? 'Descargando documento...' : 'Downloading document...'}</p>
+                </div>
+              )}
               
               {/* Pagination and Zoom Controls */}
               {numPages && (
