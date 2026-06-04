@@ -7,8 +7,11 @@ import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import '../styles/pdf-preview.css';
 
-// Use UNPKG for the worker so it works perfectly regardless of the bundler configuration
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+// Configurar el worker usando el sistema nativo de Vite
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url,
+).toString();
 
 export default function PdfPreviewModal({ isOpen, onClose, url, title }) {
   const { language } = useLanguage();
