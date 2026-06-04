@@ -66,11 +66,21 @@ export default function PdfPreviewModal({ isOpen, onClose, url, title }) {
 
             {/* PDF Viewer */}
             <div className="pdf-preview-body">
-              <iframe
-                src={url}
+              <object
+                data={url}
+                type="application/pdf"
+                width="100%"
+                height="100%"
                 title={title}
-                loading="lazy"
-              />
+              >
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', gap: '1rem', padding: '2rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
+                  <p>{language === 'es' ? 'Tu navegador no soporta la previsualización de PDFs.' : 'Your browser does not support PDF preview.'}</p>
+                  <a href={url} download className="pdf-action-btn download">
+                    <FiDownload />
+                    <span>{language === 'es' ? 'Descargar Archivo' : 'Download File'}</span>
+                  </a>
+                </div>
+              </object>
             </div>
           </motion.div>
         </motion.div>
