@@ -1,18 +1,15 @@
-import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiArrowLeft, FiGithub, FiExternalLink, FiPlay, FiClock, FiFileText } from 'react-icons/fi';
 import { useLanguage } from '../i18n/LanguageContext';
 import { projectDetails } from '../data/projectDetails';
 import { projects as projectList } from '../data/projects';
-import DocumentViewerModal from './DocumentViewerModal';
 import '../styles/project-detail.css';
 
 export default function ProjectDetail() {
   const { projectId } = useParams();
   const navigate = useNavigate();
   const { language, t } = useLanguage();
-  const [previewDoc, setPreviewDoc] = useState(null);
 
   const project = projectDetails[language]?.[projectId];
   const projectMeta = projectList[language]?.find((p) => p.id === projectId);
@@ -103,18 +100,19 @@ export default function ProjectDetail() {
             </h2>
             <div className="documents-grid">
               {project.documents.map((doc, i) => (
-                <button
+                <a
                   key={i}
-                  onClick={() => setPreviewDoc({ ...doc, docId: doc.title.includes('Memoria') ? 'memoria' : 'diccionario' })}
+                  href={doc.url}
+                  download
                   className="document-card glass-card"
-                  style={{ textAlign: 'left', width: '100%', background: 'transparent', border: '1px solid var(--border-subtle)' }}
+                  style={{ textDecoration: 'none', display: 'block', textAlign: 'left', width: '100%', background: 'transparent', border: '1px solid var(--border-subtle)' }}
                 >
                   <span className="document-icon">{doc.icon}</span>
                   <div className="document-info">
                     <h4>{doc.title}</h4>
                     <p>{doc.description}</p>
                   </div>
-                </button>
+                </a>
               ))}
             </div>
           </motion.div>
@@ -230,14 +228,6 @@ export default function ProjectDetail() {
           </motion.div>
         )}
       </div>
-
-      <DocumentViewerModal
-        isOpen={!!previewDoc}
-        onClose={() => setPreviewDoc(null)}
-        docId={previewDoc?.docId}
-        title={previewDoc?.title}
-        downloadUrl={previewDoc?.url}
-      />
     </div>
   );
 }
