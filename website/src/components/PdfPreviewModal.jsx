@@ -7,11 +7,9 @@ import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import '../styles/pdf-preview.css';
 
-// Configurar el worker usando el sistema nativo de Vite
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.mjs',
-  import.meta.url,
-).toString();
+// Configurar el worker como Asset de Vite (muy seguro)
+import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
+pdfjs.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 export default function PdfPreviewModal({ isOpen, onClose, url, title }) {
   const { language } = useLanguage();
@@ -114,8 +112,9 @@ export default function PdfPreviewModal({ isOpen, onClose, url, title }) {
             {/* React PDF Viewer */}
             <div className="pdf-preview-body">
               <Document
-                file={url}
+                file={typeof window !== 'undefined' ? `${window.location.origin}${url}` : url}
                 onLoadSuccess={onDocumentLoadSuccess}
+                onLoadError={(error) => console.error('Error loading PDF:', error)}
                 loading={
                   <div className="pdf-loader">
                     <div className="pdf-loader-spinner" />
