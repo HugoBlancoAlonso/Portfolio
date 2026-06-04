@@ -160,14 +160,14 @@ export const projectDetails = {
         {
           title: '📄 Memoria del Proyecto',
           description: 'Documento oficial con análisis de negocio y justificaciones técnicas exhaustivas.',
-          url: '/docs/Memoria.pdf',
+          url: 'https://github.com/HugoBlancoAlonso/Portfolio/blob/main/website/public/docs/Memoria.pdf',
           icon: '📑',
         },
         {
-          title: '📄 Diccionario de Datos',
-          description: 'Detalle exacto de cada variable utilizada en el proyecto.',
-          url: '/docs/Diccionario_de_datos.pdf',
-          icon: '📊',
+          title: '💾 Diccionario de Datos',
+          description: 'Definición formal de la estructura de la base de datos y modelo Entidad-Relación.',
+          url: 'https://github.com/HugoBlancoAlonso/Portfolio/blob/main/website/public/docs/Diccionario_de_datos.pdf',
+          icon: '🗂️',
         },
       ],
       setup: {
