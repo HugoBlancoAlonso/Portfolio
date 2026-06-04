@@ -64,6 +64,7 @@
   opacity: 0.9;
   max-width: 600px;
   font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
 }
 [data-theme='dark'] .hero-description {
   color: var(--text-secondary);

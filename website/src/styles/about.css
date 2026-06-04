@@ -1,8 +1,35 @@
 /* --- About Section --- */
+.about {
+  padding: var(--space-2xl) 5%;
+  background-color: var(--bg-main);
+}
+
+.about-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  margin-bottom: var(--space-xl);
+  text-align: center;
+  color: var(--text-primary);
+}
+
 .about-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-3xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2xl);
+  text-align: center;
+}
+
+.about-text-container {
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
@@ -10,22 +37,39 @@
   font-size: var(--text-lg);
   color: var(--text-secondary);
   line-height: 1.8;
+  font-weight: 400;
+}
+
+/* Decorative line */
+.about-divider {
+  width: 60px;
+  height: 4px;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+  margin: var(--space-lg) auto 0;
 }
 
 .about-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-lg);
+  width: 100%;
+  max-width: 900px;
 }
 
 .stat-card {
   text-align: center;
   padding: var(--space-xl) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* Glass card will apply bento styles */
 }
 
 .stat-number {
   font-family: var(--font-heading);
-  font-size: var(--text-4xl);
+  font-size: var(--text-5xl);
   font-weight: 800;
   background: var(--gradient-text);
   -webkit-background-clip: text;
@@ -35,32 +79,12 @@
 }
 
 .stat-label {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--text-secondary);
-  font-weight: 500;
-}
-
-/* Decorative line */
-.about-divider {
-  width: 60px;
-  height: 3px;
-  background: var(--gradient-primary);
-  border-radius: var(--radius-full);
-  margin: var(--space-xl) 0;
+  font-weight: 600;
 }
 
 @media (max-width: 768px) {
-  .about-content {
-    grid-template-columns: 1fr;
-    gap: var(--space-2xl);
-  }
-
-  .about-stats {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
   .about-stats {
     grid-template-columns: 1fr;
     gap: var(--space-md);

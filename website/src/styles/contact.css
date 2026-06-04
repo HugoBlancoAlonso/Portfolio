@@ -32,16 +32,16 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-lg);
-  background: rgba(108, 99, 255, 0.1);
-  border: 1px solid rgba(108, 99, 255, 0.2);
-  color: var(--color-primary-light);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  color: var(--color-primary);
   font-size: var(--text-xl);
   flex-shrink: 0;
   transition: all var(--transition-fast);
 }
 
 .contact-item:hover .contact-icon {
-  background: rgba(108, 99, 255, 0.2);
+  background: var(--bg-hover);
   transform: scale(1.1);
 }
 
@@ -61,12 +61,12 @@
 }
 
 .contact-item-value a {
-  color: var(--color-primary-light);
+  color: var(--color-primary);
   transition: color var(--transition-fast);
 }
 
 .contact-item-value a:hover {
-  color: var(--color-accent);
+  color: var(--color-primary-light);
 }
 
 /* Social links section */
@@ -108,7 +108,7 @@
 
 .social-link-icon {
   font-size: var(--text-xl);
-  color: var(--color-primary-light);
+  color: var(--color-primary);
 }
 
 .social-link-text {
