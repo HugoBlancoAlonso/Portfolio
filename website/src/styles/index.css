@@ -178,7 +178,7 @@ a:hover {
 
 /* Global Layout Utilities */
 .section {
-  padding: var(--space-4xl) 0;
+  padding: var(--space-2xl) 5%;
   position: relative;
 }
 
@@ -186,7 +186,6 @@ a:hover {
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 5%;
 }
 
 .section-title {
@@ -203,6 +202,8 @@ a:hover {
   color: var(--text-secondary);
   text-align: center;
   max-width: 600px;
-  margin: 0 auto var(--space-3xl) auto;
+  margin: var(--space-lg) auto var(--space-3xl) auto;
   line-height: 1.6;
+  display: block;
+  width: 100%;
 }
