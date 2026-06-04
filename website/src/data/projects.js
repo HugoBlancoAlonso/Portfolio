@@ -235,7 +235,6 @@ export const skills = [
       { name: 'TypeScript', icon: 'SiTypescript' },
       { name: 'JavaScript', icon: 'SiJavascript' },
       { name: 'SQL', icon: 'SiPostgresql' },
-      { name: 'C++', icon: 'SiCplusplus' },
     ],
   },
   {
@@ -275,7 +274,6 @@ export const skills = [
       { name: 'Docker', icon: 'SiDocker' },
       { name: 'Git', icon: 'SiGit' },
       { name: 'GitHub', icon: 'SiGithub' },
-      { name: 'Alembic', icon: 'SiAlchemy' },
       { name: 'VS Code', icon: 'SiVisualstudiocode' },
     ],
   },
