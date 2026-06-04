@@ -14,11 +14,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer-inner">
         <p className="footer-text">
-          {t.footer.made_with}{' '}
-          <span className="footer-heart">❤️</span>{' '}
-          {t.footer.by}{' '}
-          <span className="footer-name">Hugo Blanco Alonso</span>
-          {' · '}© {new Date().getFullYear()} {t.footer.rights}
+          © {new Date().getFullYear()} Hugo Blanco Alonso. {t.footer.rights || 'Todos los derechos reservados.'}
         </p>
 
         <nav className="footer-links">
