@@ -3,10 +3,12 @@ import { motion } from 'framer-motion';
 import { FiEye, FiArrowDown } from 'react-icons/fi';
 import { HiOutlineSparkles } from 'react-icons/hi';
 import { useLanguage } from '../i18n/LanguageContext';
+import PdfPreviewModal from './PdfPreviewModal';
 import '../styles/hero.css';
 
 export default function Hero() {
   const { t } = useLanguage();
+  const [cvOpen, setCvOpen] = useState(false);
 
   const scrollToProjects = () => {
     document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
@@ -78,15 +80,13 @@ export default function Hero() {
             <HiOutlineSparkles />
             {t.hero.cta_projects}
           </button>
-          <a
+          <button
             className="btn btn-outline"
-            href="/HugoBlancoAlonsoCV.pdf"
-            download
-            style={{ textDecoration: 'none' }}
+            onClick={() => setCvOpen(true)}
           >
             <FiEye />
             {t.hero.cta_cv}
-          </a>
+          </button>
         </motion.div>
       </div>
 
@@ -102,6 +102,12 @@ export default function Hero() {
         <div className="scroll-line" />
       </motion.div>
 
+      <PdfPreviewModal
+        isOpen={cvOpen}
+        onClose={() => setCvOpen(false)}
+        url="/HugoBlancoAlonsoCV.pdf"
+        title="Curriculum Vitae — Hugo Blanco Alonso"
+      />
     </section>
   );
 }

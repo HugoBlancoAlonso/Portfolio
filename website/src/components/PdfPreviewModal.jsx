@@ -1,84 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiX, FiDownload, FiFileText, FiExternalLink, FiChevronLeft, FiChevronRight, FiZoomIn, FiZoomOut } from 'react-icons/fi';
+import { FiX, FiDownload, FiExternalLink } from 'react-icons/fi';
 import { useLanguage } from '../i18n/LanguageContext';
-import { Document, Page, pdfjs } from 'react-pdf';
-import 'react-pdf/dist/Page/AnnotationLayer.css';
-import 'react-pdf/dist/Page/TextLayer.css';
 import '../styles/pdf-preview.css';
-
-// Configurar el worker usando el estándar oficial de Vite para react-pdf
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.mjs',
-  import.meta.url,
-).toString();
 
 export default function PdfPreviewModal({ isOpen, onClose, url, title }) {
   const { language } = useLanguage();
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [scale, setScale] = useState(1.2);
-  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1000);
-  const [pdfBlob, setPdfBlob] = useState(null);
-  const [loadError, setLoadError] = useState(null);
-
-  // Fetch the PDF manually as a blob to bypass any server Range-request bugs or CORS issues in pdf.js
-  useEffect(() => {
-    if (isOpen && url) {
-      setPdfBlob(null);
-      setLoadError(null);
-      
-      fetch(url)
-        .then((res) => {
-          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-          return res.blob();
-        })
-        .then((blob) => setPdfBlob(blob))
-        .catch((e) => {
-          console.error('Fetch error:', e);
-          setLoadError(e.message);
-        });
-    }
-  }, [isOpen, url]);
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Responsive scale
-  const actualScale = windowWidth < 768 ? 0.6 : scale;
 
   // Close on Escape key
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowRight' && numPages && pageNumber < numPages) setPageNumber(prev => prev + 1);
-      if (e.key === 'ArrowLeft' && pageNumber > 1) setPageNumber(prev => prev - 1);
     };
+
     if (isOpen) {
       document.addEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'hidden';
     }
+
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
-      // Reset state when closed
-      setPageNumber(1);
-      setScale(1.2);
     };
-  }, [isOpen, onClose, numPages, pageNumber]);
-
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
-    setPageNumber(1);
-  }
-
-  const zoomIn = () => setScale(prev => Math.min(prev + 0.2, 3.0));
-  const zoomOut = () => setScale(prev => Math.max(prev - 0.2, 0.5));
-  const prevPage = () => setPageNumber(prev => Math.max(prev - 1, 1));
-  const nextPage = () => setPageNumber(prev => Math.min(prev + 1, numPages || 1));
+  }, [isOpen, onClose]);
 
   return (
     <AnimatePresence>
@@ -88,8 +32,9 @@ export default function PdfPreviewModal({ isOpen, onClose, url, title }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
+          transition={{ duration: 0.2 }}
           onClick={(e) => {
+            // Close if clicking on the dark background
             if (e.target === e.currentTarget) onClose();
           }}
         >
@@ -102,92 +47,46 @@ export default function PdfPreviewModal({ isOpen, onClose, url, title }) {
           >
             {/* Header */}
             <div className="pdf-preview-header">
-              <div className="pdf-preview-title">
-                <FiFileText />
-                <span>{title}</span>
-              </div>
+              <span className="pdf-preview-title">{title}</span>
               <div className="pdf-preview-actions">
                 <a
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="pdf-action-btn"
-                  style={{ background: 'rgba(108, 99, 255, 0.1)', color: 'var(--color-primary-light)' }}
+                  title={language === 'es' ? 'Abrir en pestaña nueva' : 'Open in new tab'}
                 >
                   <FiExternalLink />
-                  <span>{language === 'es' ? 'Abrir' : 'Open'}</span>
+                  <span className="action-text">{language === 'es' ? 'Abrir' : 'Open'}</span>
                 </a>
                 <a
                   href={url}
                   download
-                  className="pdf-action-btn download"
+                  className="pdf-action-btn"
+                  title={language === 'es' ? 'Descargar archivo' : 'Download file'}
                 >
                   <FiDownload />
-                  <span>{language === 'es' ? 'Descargar' : 'Download'}</span>
+                  <span className="action-text">{language === 'es' ? 'Descargar' : 'Download'}</span>
                 </a>
-                <button className="pdf-action-btn close" onClick={onClose}>
+                <button
+                  className="pdf-action-btn close-btn"
+                  onClick={onClose}
+                  title={language === 'es' ? 'Cerrar' : 'Close'}
+                >
                   <FiX />
-                  <span>{language === 'es' ? 'Cerrar' : 'Close'}</span>
                 </button>
               </div>
             </div>
 
-            {/* React PDF Viewer */}
+            {/* Body */}
             <div className="pdf-preview-body">
-              {loadError ? (
-                <div className="pdf-loader" style={{ color: 'var(--color-error)' }}>
-                  <p>{language === 'es' ? 'Error cargando documento: ' : 'Error loading document: '} {loadError}</p>
-                </div>
-              ) : pdfBlob ? (
-                <Document
-                  file={pdfBlob}
-                  onLoadSuccess={onDocumentLoadSuccess}
-                  onLoadError={(error) => console.error('Error rendering PDF:', error)}
-                  loading={
-                    <div className="pdf-loader">
-                      <div className="pdf-loader-spinner" />
-                      <p>{language === 'es' ? 'Renderizando PDF...' : 'Rendering PDF...'}</p>
-                    </div>
-                  }
-                  className="pdf-document-wrapper"
-                >
-                  <Page
-                    pageNumber={pageNumber}
-                    scale={actualScale}
-                    renderTextLayer={true}
-                    renderAnnotationLayer={true}
-                  />
-                </Document>
-              ) : (
-                <div className="pdf-loader">
-                  <div className="pdf-loader-spinner" />
-                  <p>{language === 'es' ? 'Descargando documento...' : 'Downloading document...'}</p>
-                </div>
-              )}
-              
-              {/* Pagination and Zoom Controls */}
-              {numPages && (
-                <div className="pdf-controls">
-                  <button className="pdf-action-btn icon-only" onClick={zoomOut} title="Zoom Out">
-                    <FiZoomOut />
-                  </button>
-                  <button className="pdf-action-btn icon-only" onClick={zoomIn} title="Zoom In">
-                    <FiZoomIn />
-                  </button>
-                  
-                  <div style={{ width: '1px', height: '24px', background: 'var(--border-subtle)', margin: '0 8px' }} />
-
-                  <button className="pdf-action-btn icon-only" onClick={prevPage} disabled={pageNumber <= 1}>
-                    <FiChevronLeft />
-                  </button>
-                  <span>
-                    {pageNumber} / {numPages}
-                  </span>
-                  <button className="pdf-action-btn icon-only" onClick={nextPage} disabled={pageNumber >= numPages}>
-                    <FiChevronRight />
-                  </button>
-                </div>
-              )}
+              {/* iframe is standard and works best in production environments like Vercel */}
+              <iframe
+                src={`${url}#toolbar=0&navpanes=0`}
+                title={title}
+                frameBorder="0"
+                style={{ width: '100%', height: '100%' }}
+              />
             </div>
           </motion.div>
         </motion.div>
