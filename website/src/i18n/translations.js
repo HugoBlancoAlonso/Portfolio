@@ -13,8 +13,14 @@ export const translations = {
       title: 'Desarrollador de Aplicaciones Multiplataforma',
       subtitle: 'Especialización en IA y Big Data',
       description: 'Diseño y desarrollo soluciones tecnológicas que resuelven problemas reales mediante arquitecturas sólidas, Inteligencia Artificial y código limpio.',
+      cta_title: 'Creemos algo juntos',
       cta_projects: 'Ver Proyectos',
       cta_cv: 'Ver CV',
+      stats: {
+        projects: 'Proyectos',
+        technologies: 'Tecnologías',
+        commitment: 'Compromiso',
+      },
     },
     about: {
       title: 'Sobre Mí',
@@ -22,7 +28,7 @@ export const translations = {
       stats: {
         projects: 'Proyectos',
         technologies: 'Tecnologías',
-        areas: 'Áreas de Expertise',
+        areas: 'Áreas de experiencia',
       },
     },
     projects: {
@@ -73,8 +79,14 @@ export const translations = {
       title: 'Cross-Platform Application Developer',
       subtitle: 'Specialized in AI and Big Data',
       description: 'I design and develop technology solutions that solve real-world problems through solid architectures, Artificial Intelligence, and clean code.',
+      cta_title: 'Let\'s build something',
       cta_projects: 'View Projects',
       cta_cv: 'View CV',
+      stats: {
+        projects: 'Projects',
+        technologies: 'Technologies',
+        commitment: 'Commitment',
+      },
     },
     about: {
       title: 'About Me',
