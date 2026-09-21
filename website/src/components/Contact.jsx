@@ -7,6 +7,7 @@ import '../styles/contact.css';
 // 📌 CONFIGURA TUS REDES SOCIALES AQUÍ:
 // Reemplaza '' con tu URL real cuando quieras
 // ============================================
+
 const SOCIAL_LINKS = {
   github: 'https://github.com/HugoBlancoAlonso',
   linkedin: '',
