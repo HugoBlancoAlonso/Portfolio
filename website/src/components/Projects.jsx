@@ -68,7 +68,7 @@ export default function Projects() {
                         className="btn btn-primary"
                         onClick={() => navigate(`/project/${project.id}`)}
                       >
-                        <FiExternalLink /> Details
+                        <FiExternalLink /> {t.projects.view_details}
                       </button>
                     )}
                   </div>

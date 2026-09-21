@@ -37,7 +37,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <h2 className="bento-cta-title">Let's build something</h2>
+          <h2 className="bento-cta-title">{t.hero.cta_title}</h2>
           <button className="btn btn-primary" onClick={scrollToProjects}>
             <FiBriefcase /> {t.hero.cta_projects}
           </button>
@@ -54,7 +54,7 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <h3>4+</h3>
-          <p>Key Projects</p>
+          <p>{t.hero.stats.projects}</p>
         </motion.div>
 
         <motion.div
@@ -64,7 +64,7 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           <h3>20+</h3>
-          <p>Technologies</p>
+          <p>{t.hero.stats.technologies}</p>
         </motion.div>
 
         <motion.div
@@ -74,7 +74,7 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           <h3>100%</h3>
-          <p>Commitment</p>
+          <p>{t.hero.stats.commitment}</p>
         </motion.div>
 
       </div>
