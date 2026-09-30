@@ -10,7 +10,7 @@ import '../styles/contact.css';
 
 const SOCIAL_LINKS = {
   github: 'https://github.com/HugoBlancoAlonso',
-  linkedin: '',
+  linkedin: 'https://www.linkedin.com/in/hugo-blanco-alonso-a5b167407/',
 };
 
 export default function Contact() {
@@ -54,8 +54,8 @@ export default function Contact() {
               <div>
                 <div className="contact-item-label">{t.contact.email_label}</div>
                 <div className="contact-item-value">
-                  <a href="mailto:hu.blancoalonso@gmail.com">
-                    hu.blancoalonso@gmail.com
+                  <a href="mailto:blancoalonsoh@gmail.com" target="_blank" rel="noopener noreferrer">
+                    blancoalonsoh@gmail.com
                   </a>
                 </div>
               </div>
