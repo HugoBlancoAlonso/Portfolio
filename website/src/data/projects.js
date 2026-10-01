@@ -111,6 +111,29 @@ export const projects = {
         'Auth con Google y Apple',
       ],
     },
+    {
+      id: 'football-tracker',
+      number: '04',
+      title: 'Seguimiento de Partidos (Football Matches Tracker)',
+      shortTitle: 'Tracker de Partidos',
+      description:
+        'Aplicación web desarrollada con React, Vite y Supabase para llevar un registro de los partidos de fútbol vistos en diferentes competiciones. Incluye autenticación de usuarios, modo claro/oscuro y guardado automático en base de datos.',
+      technologies: [
+        'React',
+        'Vite',
+        'Supabase',
+        'Node.js',
+      ],
+      category: 'fullstack',
+      image: '/projects/partidos.jpg',
+      githubUrl: 'https://github.com/HugoBlancoAlonso/Partidos',
+      comingSoon: true,
+      highlights: [
+        'Autenticación con Supabase',
+        'Guardado en la nube',
+        'Modo Claro / Oscuro',
+      ],
+    },
   ],
   en: [
     {
@@ -222,6 +245,29 @@ export const projects = {
         'React Native + Expo',
         'REST API with FastAPI',
         'Auth with Google & Apple',
+      ],
+    },
+    {
+      id: 'football-tracker',
+      number: '04',
+      title: 'Football Matches Tracker',
+      shortTitle: 'Matches Tracker',
+      description:
+        'Web application developed with React, Vite and Supabase to keep track of football matches watched across different competitions. Includes user authentication, light/dark mode and automatic database saving.',
+      technologies: [
+        'React',
+        'Vite',
+        'Supabase',
+        'Node.js',
+      ],
+      category: 'fullstack',
+      image: '/projects/partidos.jpg',
+      githubUrl: 'https://github.com/HugoBlancoAlonso/Partidos',
+      comingSoon: true,
+      highlights: [
+        'Supabase Authentication',
+        'Cloud Saving',
+        'Light / Dark Mode',
       ],
     },
   ],

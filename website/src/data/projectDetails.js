@@ -212,6 +212,46 @@ export const projectDetails = {
       note: '',
       documents: [],
     },
+    'football-tracker': {
+      title: 'Web Tracker de Partidos',
+      subtitle: 'Aplicación web para registrar y hacer seguimiento de los partidos de fútbol vistos en diferentes competiciones.',
+      badges: ['React', 'Vite', 'Supabase', 'Node.js'],
+      githubUrl: 'https://github.com/HugoBlancoAlonso/Portfolio/tree/main/04-Partidos',
+      sections: [
+        {
+          title: '🎯 Sobre el Proyecto',
+          content: 'Esta aplicación web permite a los usuarios llevar un registro detallado de todos los partidos de fútbol que han visto a lo largo de la temporada en diversas competiciones.\n\nNace como un proyecto de uso personal para llevar un control visual y organizado de las ligas y torneos que suelo consumir. Actualmente es utilizado tanto por mí como por amigos y familiares con los que comparto esta afición, guardando automáticamente los datos en la nube para no perder el progreso entre dispositivos.',
+        },
+        {
+          title: '🔐 Autenticación y Perfiles',
+          content: 'El sistema integra **Supabase** como Backend as a Service (BaaS), proporcionando un flujo de registro e inicio de sesión seguro. Cada usuario tiene su propio progreso almacenado independientemente, garantizando la privacidad y consistencia de los datos.',
+        },
+        {
+          title: '📱 Experiencia de Usuario',
+          content: 'La interfaz está diseñada priorizando la claridad y la usabilidad. Incluye:\n\n• **Dashboard de Competiciones:** Visualización rápida del progreso global en cada liga.\n• **Gestor de Partidos:** Listado detallado por jornadas con sistema de marcado rápido.\n• **Tema Claro/Oscuro:** Preferencia de visualización persistente para adaptarse al entorno del usuario.',
+        },
+        {
+          title: '💻 Stack Tecnológico',
+          content: '• **Frontend:** Desarrollado con **React** y empaquetado con **Vite** para un rendimiento óptimo.\n• **Backend (BaaS):** **Supabase** (PostgreSQL) para gestionar la base de datos en tiempo real.\n• **Autenticación:** Sistema integrado de registro y login mediante Supabase Auth.\n• **Estilos:** Diseño responsivo y moderno con soporte completo para temas (Claro/Oscuro).',
+        },
+      ],
+      phases: [],
+      note: '💡 **Nota:** Proyecto actualmente en fase de desarrollo activo. Se añadirán nuevas funcionalidades progresivamente.',
+      documents: [],
+      setup: {
+        title: '🛠️ Instalación Local',
+        description: 'Instrucciones para levantar el entorno de desarrollo en tu máquina:',
+        structure: `04-Partidos/
+├── src/                        ← Código fuente (React)
+│   ├── components/             ← Componentes UI
+│   ├── pages/                  ← Vistas principales
+│   └── supabase/               ← Configuración BaaS
+├── package.json
+└── vite.config.js`,
+        dockerCommand: 'npm run dev',
+        accessUrl: 'http://localhost:5173/',
+      }
+    },
   },
   en: {
     'doom-ue5': {
@@ -425,6 +465,46 @@ export const projectDetails = {
       phases: [],
       note: '',
       documents: [],
+    },
+    'football-tracker': {
+      title: 'Web Football Matches Tracker',
+      subtitle: 'Web application to register and track football matches watched across different competitions.',
+      badges: ['React', 'Vite', 'Supabase', 'Node.js'],
+      githubUrl: 'https://github.com/HugoBlancoAlonso/Partidos',
+      sections: [
+        {
+          title: '🎯 About the Project',
+          content: 'This web application allows users to keep a detailed record of all the football matches they have watched throughout the season in various competitions.\n\nIt was born as a personal project to have a visual and organized control of the leagues and tournaments I usually follow. It is currently used by me, as well as friends and family with whom I share this hobby, automatically saving data in the cloud to prevent information loss between devices.',
+        },
+        {
+          title: '🔐 Authentication & Profiles',
+          content: 'The system integrates **Supabase** as a Backend as a Service (BaaS), providing a secure registration and login flow. Each user has their own progress stored independently, ensuring data privacy and consistency.',
+        },
+        {
+          title: '📱 User Experience',
+          content: 'The interface is designed prioritizing clarity and usability. It includes:\n\n• **Competitions Dashboard:** Quick visualization of overall progress in each league.\n• **Match Manager:** Detailed list by matchdays with a quick marking system.\n• **Light/Dark Theme:** Persistent display preference to adapt to the user\'s environment.',
+        },
+        {
+          title: '💻 Tech Stack',
+          content: '• **Frontend:** Built with **React** and bundled with **Vite** for optimal performance.\n• **Backend (BaaS):** **Supabase** (PostgreSQL) to manage the database in real-time.\n• **Authentication:** Integrated registration and login system via Supabase Auth.\n• **Styling:** Responsive and modern design with full support for theming (Light/Dark mode).',
+        },
+      ],
+      phases: [],
+      note: '💡 **Note:** Project currently in active development phase. New features will be added progressively.',
+      documents: [],
+      setup: {
+        title: '🛠️ Local Installation',
+        description: 'Instructions to set up the development environment on your machine:',
+        structure: `04-Partidos/
+├── src/                        ← Source code (React)
+│   ├── components/             ← UI Components
+│   ├── pages/                  ← Main views
+│   └── supabase/               ← BaaS Configuration
+├── package.json
+└── vite.config.js`,
+        dockerCommand: 'npm run dev',
+        accessUrl: 'http://localhost:5173/',
+      }
     },
   },
 };

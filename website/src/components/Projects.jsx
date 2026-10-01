@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiGithub, FiExternalLink } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +9,10 @@ import '../styles/projects.css';
 export default function Projects() {
   const { language, t } = useLanguage();
   const navigate = useNavigate();
+  const [showAllProjects, setShowAllProjects] = useState(false);
+
+  const currentProjects = projects[language];
+  const displayedProjects = showAllProjects ? currentProjects : currentProjects.slice(0, 4);
 
   return (
     <section id="projects" className="projects">
@@ -15,7 +20,7 @@ export default function Projects() {
         <h2 className="section-title">{t.projects.title}</h2>
 
         <div className="bento-grid">
-          {projects[language].map((project, index) => {
+          {displayedProjects.map((project, index) => {
             // First project is featured (spans full width), others span 4 columns (1/3 width)
             const isFeatured = index === 0;
             return (
@@ -77,6 +82,17 @@ export default function Projects() {
             );
           })}
         </div>
+
+        {currentProjects.length > 4 && (
+          <div className="view-more-container" style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
+            <button 
+              className="btn btn-outline"
+              onClick={() => setShowAllProjects(!showAllProjects)}
+            >
+              {showAllProjects ? t.projects.view_less : t.projects.view_more}
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

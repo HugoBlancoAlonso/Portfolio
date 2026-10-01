@@ -38,6 +38,8 @@ export const translations = {
       view_details: 'Ver Detalles',
       coming_soon: 'En Desarrollo',
       coming_soon_desc: 'Este proyecto será publicado próximamente.',
+      view_more: 'Ver más',
+      view_less: 'Ver menos',
     },
     skills: {
       title: 'Habilidades Técnicas',
@@ -104,6 +106,8 @@ export const translations = {
       view_details: 'View Details',
       coming_soon: 'In Development',
       coming_soon_desc: 'This project will be published soon.',
+      view_more: 'Show more',
+      view_less: 'Show less',
     },
     skills: {
       title: 'Technical Skills',
