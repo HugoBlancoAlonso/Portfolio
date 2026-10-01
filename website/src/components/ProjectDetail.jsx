@@ -74,18 +74,52 @@ export default function ProjectDetail() {
           )}
 
           {/* Actions */}
-          {project.githubUrl && (
-            <div className="project-detail-actions">
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary"
-              >
-                <FiGithub />
-                {t.projects.view_github}
-                <FiExternalLink size={14} />
-              </a>
+          {(project.liveUrl || project.githubUrl) && (
+            <div 
+              className="project-detail-actions"
+              style={{ 
+                flexDirection: project.liveUrl && project.githubUrl ? 'column' : 'row',
+                alignItems: 'center',
+                gap: '1rem'
+              }}
+            >
+              {project.liveDemoText && (
+                <p style={{ margin: '0 0 5px 0', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', textAlign: 'center' }}>
+                  {project.liveDemoText}
+                </p>
+              )}
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary"
+                  style={{ 
+                    width: '100%', 
+                    maxWidth: '300px', 
+                    display: 'flex', 
+                    justifyContent: 'center',
+                    backgroundColor: '#10b981',
+                    borderColor: '#10b981',
+                    color: '#ffffff'
+                  }}
+                >
+                  <FiExternalLink style={{ marginRight: '8px' }} />
+                  {language === 'es' ? 'Ver Proyecto en Vivo' : 'View Live Project'}
+                </a>
+              )}
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary"
+                  style={{ width: '100%', maxWidth: '300px', display: 'flex', justifyContent: 'center' }}
+                >
+                  <FiGithub style={{ marginRight: '8px' }} />
+                  {t.projects.view_github}
+                </a>
+              )}
             </div>
           )}
         </motion.div>

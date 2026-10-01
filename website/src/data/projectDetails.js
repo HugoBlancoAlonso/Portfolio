@@ -217,6 +217,8 @@ export const projectDetails = {
       subtitle: 'Aplicación web para registrar y hacer seguimiento de los partidos de fútbol vistos en diferentes competiciones.',
       badges: ['React', 'Vite', 'Supabase', 'Node.js'],
       githubUrl: 'https://github.com/HugoBlancoAlonso/Portfolio/tree/main/04-Partidos',
+      liveUrl: 'https://partidos-eight.vercel.app',
+      liveDemoText: 'Aquí puedes registrarte y probar la web por tu propia cuenta. 👇',
       sections: [
         {
           title: '🎯 Sobre el Proyecto',
@@ -471,6 +473,8 @@ export const projectDetails = {
       subtitle: 'Web application to register and track football matches watched across different competitions.',
       badges: ['React', 'Vite', 'Supabase', 'Node.js'],
       githubUrl: 'https://github.com/HugoBlancoAlonso/Portfolio/tree/main/04-Partidos',
+      liveUrl: 'https://partidos-eight.vercel.app',
+      liveDemoText: 'Here you can register and try the web app on your own. 👇',
       sections: [
         {
           title: '🎯 About the Project',
