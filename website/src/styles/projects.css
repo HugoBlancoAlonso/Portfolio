@@ -32,6 +32,11 @@
   grid-column: span 4;
 }
 
+.bento-wide {
+  grid-column: span 8;
+  flex-direction: row;
+}
+
 .project-image-container {
   flex: 1;
   overflow: hidden;
@@ -116,11 +121,14 @@
 }
 
 @media (max-width: 900px) {
-  .bento-featured {
+  .bento-featured, .bento-wide {
     flex-direction: column;
   }
   .bento-standard {
     grid-column: span 6;
+  }
+  .bento-wide {
+    grid-column: span 12;
   }
 }
 

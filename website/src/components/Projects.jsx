@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiGithub, FiExternalLink } from 'react-icons/fi';
+import { FiGithub, FiExternalLink, FiGlobe } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../i18n/LanguageContext';
 import { projects } from '../data/projects';
@@ -23,10 +23,16 @@ export default function Projects() {
           {displayedProjects.map((project, index) => {
             // First project is featured (spans full width), others span 4 columns (1/3 width)
             const isFeatured = index === 0;
+            const isWide = project.id === 'football-tracker';
+            
+            let bentoClass = 'bento-standard';
+            if (isFeatured) bentoClass = 'bento-featured';
+            else if (isWide) bentoClass = 'bento-wide';
+
             return (
               <motion.div
                 key={project.id}
-                className={`glass-card project-bento-card ${isFeatured ? 'bento-featured' : 'bento-standard'}`}
+                className={`glass-card project-bento-card ${bentoClass}`}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
@@ -58,12 +64,25 @@ export default function Projects() {
                   </div>
 
                   <div className="project-links">
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-primary"
+                        style={{ backgroundColor: '#10b981', borderColor: '#10b981', color: 'white', padding: '0.5rem' }}
+                        title="Ver Proyecto en Vivo"
+                      >
+                        <FiGlobe />
+                      </a>
+                    )}
                     {project.githubUrl && (
                       <a
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-outline"
+                        style={{ padding: '0.5rem' }}
                       >
                         <FiGithub />
                       </a>

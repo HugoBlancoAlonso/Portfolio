@@ -127,6 +127,7 @@ export const projects = {
       category: 'fullstack',
       image: '/projects/partidos.jpg',
       githubUrl: 'https://github.com/HugoBlancoAlonso/Portfolio/tree/main/04-Partidos',
+      liveUrl: 'https://partidos-eight.vercel.app',
       comingSoon: true,
       highlights: [
         'Autenticación con Supabase',
@@ -263,6 +264,7 @@ export const projects = {
       category: 'fullstack',
       image: '/projects/partidos.jpg',
       githubUrl: 'https://github.com/HugoBlancoAlonso/Portfolio/tree/main/04-Partidos',
+      liveUrl: 'https://partidos-eight.vercel.app',
       comingSoon: true,
       highlights: [
         'Supabase Authentication',
