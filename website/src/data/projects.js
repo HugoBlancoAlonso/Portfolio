@@ -126,7 +126,7 @@ export const projects = {
       ],
       category: 'fullstack',
       image: '/projects/partidos.jpg',
-      githubUrl: 'https://github.com/HugoBlancoAlonso/Partidos',
+      githubUrl: 'https://github.com/HugoBlancoAlonso/Portfolio/tree/main/04-Partidos',
       comingSoon: true,
       highlights: [
         'Autenticación con Supabase',
@@ -262,7 +262,7 @@ export const projects = {
       ],
       category: 'fullstack',
       image: '/projects/partidos.jpg',
-      githubUrl: 'https://github.com/HugoBlancoAlonso/Partidos',
+      githubUrl: 'https://github.com/HugoBlancoAlonso/Portfolio/tree/main/04-Partidos',
       comingSoon: true,
       highlights: [
         'Supabase Authentication',

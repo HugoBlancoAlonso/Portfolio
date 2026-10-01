@@ -470,7 +470,7 @@ export const projectDetails = {
       title: 'Web Football Matches Tracker',
       subtitle: 'Web application to register and track football matches watched across different competitions.',
       badges: ['React', 'Vite', 'Supabase', 'Node.js'],
-      githubUrl: 'https://github.com/HugoBlancoAlonso/Partidos',
+      githubUrl: 'https://github.com/HugoBlancoAlonso/Portfolio/tree/main/04-Partidos',
       sections: [
         {
           title: '🎯 About the Project',

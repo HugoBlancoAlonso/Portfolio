@@ -3,7 +3,7 @@ import { useLanguage } from '../i18n/LanguageContext';
 import '../styles/about.css';
 
 const stats = [
-  { value: '4', key: 'projects' },
+  { value: '5', key: 'projects' },
   { value: '20+', key: 'technologies' },
   { value: '5', key: 'areas' },
 ];

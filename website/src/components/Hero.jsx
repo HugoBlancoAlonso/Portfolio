@@ -53,7 +53,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <h3>4+</h3>
+          <h3>5+</h3>
           <p>{t.hero.stats.projects}</p>
         </motion.div>
 
