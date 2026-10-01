@@ -1,4 +1,4 @@
-# Seguimiento de Partidos (Football Matches Tracker)
+# Web Tracker de Partidos
 
 Esta aplicación web te permite llevar un registro de todos los partidos de fútbol que has visto en diferentes competiciones. Está desarrollada utilizando React y Vite en el frontend, y utiliza Supabase como backend para la autenticación de usuarios y el almacenamiento de datos.
 
@@ -30,6 +30,8 @@ La aplicación se divide en las siguientes características principales:
 ---
 
 ## 🚀 Cómo lanzar la app en un ordenador nuevo (Local)
+
+Para clonar el repositorio accede desde este enlace: https://github.com/HugoBlancoAlonso/Partidos
 
 Si has descargado o clonado este repositorio de GitHub y quieres ejecutar la aplicación en tu propio ordenador, sigue estos pasos:
 
