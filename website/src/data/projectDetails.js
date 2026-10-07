@@ -52,7 +52,7 @@ export const projectDetails = {
     },
     'contract-analyzer': {
       title: 'Analizador Inteligente de Contratos con NLP',
-      subtitle: 'Un sistema automatizado para detectar cláusulas abusivas usando Inteligencia Artificial, Bases de Datos Vectoriales y Arquitectura de Microservicios.',
+      subtitle: 'Plataforma inteligente para automatizar la revisión de contratos de arrendamiento. Utiliza Base de Datos Vectorial (ChromaDB) junto con Modelos de Lenguaje para detectar cláusulas abusivas o ilegales mediante búsqueda semántica. Arquitectura de microservicios con Docker.',
       badges: ['Python', 'FastAPI', 'Streamlit', 'ChromaDB', 'NLP', 'Docker'],
       githubUrl: 'https://github.com/HugoBlancoAlonso/Portfolio/tree/main/01-AnalizadorContratos',
       sections: [
@@ -117,7 +117,7 @@ export const projectDetails = {
     },
     'energy-prediction': {
       title: 'Predicción de Generación y Demanda Eléctrica',
-      subtitle: 'Pipeline de datos estructurado en Arquitectura Medallón para el procesamiento y análisis de datos energéticos y meteorológicos.',
+      subtitle: 'Pipeline de datos completo estructurado en Arquitectura Medallón (Bronce, Plata, Oro) para la ingesta, limpieza, transformación y visualización de datos históricos de generación eléctrica y meteorológicos (AEMET, ESIOS). Incluye dashboard interactivo y modelo predictivo en desarrollo.',
       badges: ['Python', 'Pandas', 'Jupyter', 'Docker', 'Machine Learning'],
       githubUrl: 'https://github.com/HugoBlancoAlonso/Portfolio/tree/main/02-PrediccionGeneraci%C3%B3nElectrica',
       sections: [
@@ -189,29 +189,6 @@ export const projectDetails = {
         accessUrl: 'http://localhost:9870',
       },
     },
-    'social-app': {
-      title: 'Red Social — Aplicación Móvil Full-Stack',
-      subtitle: 'Aplicación móvil de red social construida con React Native (Expo) y FastAPI (Python).',
-      badges: ['React Native', 'Expo', 'FastAPI', 'PostgreSQL', 'SQLAlchemy', 'JWT', 'TypeScript'],
-      githubUrl: '',
-      sections: [
-        {
-          title: '🏗️ Arquitectura',
-          content: 'Aplicación full-stack con frontend móvil en **React Native + Expo** (TypeScript) y backend API en **FastAPI** (Python). Base de datos **PostgreSQL 16** con ORM **SQLAlchemy 2.0** y migraciones **Alembic**.',
-        },
-        {
-          title: '🔐 Autenticación',
-          content: 'Sistema de autenticación completo con:\n\n• **JWT** (JSON Web Tokens) con tokens de acceso y refresh.\n• **Google OAuth** para login con cuenta de Google.\n• **Apple Sign-In** para usuarios de iOS.',
-        },
-        {
-          title: '📱 Funcionalidades',
-          content: '• Sistema de publicaciones (crear, editar, eliminar)\n• Feed cronológico personalizado\n• Sistema de likes y comentarios\n• Seguimiento de usuarios (follow/unfollow)\n• Notificaciones en tiempo real\n• Perfiles de usuario con avatar\n• Upload de imágenes',
-        },
-      ],
-      phases: [],
-      note: '',
-      documents: [],
-    },
     'football-tracker': {
       title: 'Web Tracker de Partidos',
       subtitle: 'Aplicación web para registrar y hacer seguimiento de los partidos de fútbol vistos en diferentes competiciones.',
@@ -253,6 +230,29 @@ export const projectDetails = {
         dockerCommand: 'npm run dev',
         accessUrl: 'http://localhost:5173/',
       }
+    },
+    'social-app': {
+      title: 'Red Social — Aplicación Móvil Full-Stack',
+      subtitle: 'Aplicación móvil de red social full-stack construida con React Native (Expo) y FastAPI (Python). Incluye autenticación con JWT, Google OAuth y Apple Sign-In, sistema de posts, likes, comentarios, followers y notificaciones.',
+      badges: ['React Native', 'Expo', 'FastAPI', 'PostgreSQL', 'SQLAlchemy', 'JWT', 'TypeScript'],
+      githubUrl: '',
+      sections: [
+        {
+          title: '🏗️ Arquitectura',
+          content: 'Aplicación full-stack con frontend móvil en **React Native + Expo** (TypeScript) y backend API en **FastAPI** (Python). Base de datos **PostgreSQL 16** con ORM **SQLAlchemy 2.0** y migraciones **Alembic**.',
+        },
+        {
+          title: '🔐 Autenticación',
+          content: 'Sistema de autenticación completo con:\n\n• **JWT** (JSON Web Tokens) con tokens de acceso y refresh.\n• **Google OAuth** para login con cuenta de Google.\n• **Apple Sign-In** para usuarios de iOS.',
+        },
+        {
+          title: '📱 Funcionalidades',
+          content: '• Sistema de publicaciones (crear, editar, eliminar)\n• Feed cronológico personalizado\n• Sistema de likes y comentarios\n• Seguimiento de usuarios (follow/unfollow)\n• Notificaciones en tiempo real\n• Perfiles de usuario con avatar\n• Upload de imágenes',
+        },
+      ],
+      phases: [],
+      note: '',
+      documents: [],
     },
   },
   en: {
@@ -308,7 +308,7 @@ export const projectDetails = {
     },
     'contract-analyzer': {
       title: 'Intelligent Contract Analyzer with NLP',
-      subtitle: 'An automated system for detecting abusive clauses using AI, Vector Databases, and Microservices Architecture.',
+      subtitle: 'Intelligent platform for automating rental contract reviews. Uses a Vector Database (ChromaDB) together with Language Models to detect abusive or illegal clauses through semantic search. Microservices architecture with Docker.',
       badges: ['Python', 'FastAPI', 'Streamlit', 'ChromaDB', 'NLP', 'Docker'],
       githubUrl: 'https://github.com/HugoBlancoAlonso/Portfolio/tree/main/01-AnalizadorContratos',
       sections: [
@@ -373,7 +373,7 @@ export const projectDetails = {
     },
     'energy-prediction': {
       title: 'Electricity Generation & Demand Prediction',
-      subtitle: 'Data pipeline structured in Medallion Architecture for processing and analyzing energy and meteorological data.',
+      subtitle: 'Complete data pipeline structured in Medallion Architecture (Bronze, Silver, Gold) for ingestion, cleaning, transformation and visualization of historical electricity generation and meteorological data (AEMET, ESIOS). Includes interactive dashboard and predictive ML model in development.',
       badges: ['Python', 'Pandas', 'Jupyter', 'Docker', 'Machine Learning'],
       githubUrl: 'https://github.com/HugoBlancoAlonso/Portfolio/tree/main/02-PrediccionGeneraci%C3%B3nElectrica',
       sections: [
@@ -445,29 +445,6 @@ export const projectDetails = {
         accessUrl: 'http://localhost:9870',
       },
     },
-    'social-app': {
-      title: 'Social Network — Full-Stack Mobile App',
-      subtitle: 'Full-stack social network mobile application built with React Native (Expo) and FastAPI (Python).',
-      badges: ['React Native', 'Expo', 'FastAPI', 'PostgreSQL', 'SQLAlchemy', 'JWT', 'TypeScript'],
-      githubUrl: '',
-      sections: [
-        {
-          title: '🏗️ Architecture',
-          content: 'Full-stack application with **React Native + Expo** (TypeScript) mobile frontend and **FastAPI** (Python) backend API. **PostgreSQL 16** database with **SQLAlchemy 2.0** ORM and **Alembic** migrations.',
-        },
-        {
-          title: '🔐 Authentication',
-          content: 'Complete authentication system with:\n\n• **JWT** (JSON Web Tokens) with access and refresh tokens.\n• **Google OAuth** for Google account login.\n• **Apple Sign-In** for iOS users.',
-        },
-        {
-          title: '📱 Features',
-          content: '• Post system (create, edit, delete)\n• Personalized chronological feed\n• Likes and comments system\n• User following (follow/unfollow)\n• Real-time notifications\n• User profiles with avatar\n• Image upload',
-        },
-      ],
-      phases: [],
-      note: '',
-      documents: [],
-    },
     'football-tracker': {
       title: 'Web Football Matches Tracker',
       subtitle: 'Web application to register and track football matches watched across different competitions.',
@@ -509,6 +486,29 @@ export const projectDetails = {
         dockerCommand: 'npm run dev',
         accessUrl: 'http://localhost:5173/',
       }
+    },
+    'social-app': {
+      title: 'Social Network — Full-Stack Mobile App',
+      subtitle: 'Full-stack social network mobile application built with React Native (Expo) and FastAPI (Python). Includes JWT authentication, Google OAuth and Apple Sign-In, posts system, likes, comments, followers and notifications.',
+      badges: ['React Native', 'Expo', 'FastAPI', 'PostgreSQL', 'SQLAlchemy', 'JWT', 'TypeScript'],
+      githubUrl: '',
+      sections: [
+        {
+          title: '🏗️ Architecture',
+          content: 'Full-stack application with **React Native + Expo** (TypeScript) mobile frontend and **FastAPI** (Python) backend API. **PostgreSQL 16** database with **SQLAlchemy 2.0** ORM and **Alembic** migrations.',
+        },
+        {
+          title: '🔐 Authentication',
+          content: 'Complete authentication system with:\n\n• **JWT** (JSON Web Tokens) with access and refresh tokens.\n• **Google OAuth** for Google account login.\n• **Apple Sign-In** for iOS users.',
+        },
+        {
+          title: '📱 Features',
+          content: '• Post system (create, edit, delete)\n• Personalized chronological feed\n• Likes and comments system\n• User following (follow/unfollow)\n• Real-time notifications\n• User profiles with avatar\n• Image upload',
+        },
+      ],
+      phases: [],
+      note: '',
+      documents: [],
     },
   },
 };

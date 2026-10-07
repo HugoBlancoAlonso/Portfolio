@@ -41,7 +41,7 @@
   flex: 1;
   overflow: hidden;
   position: relative;
-  min-height: 200px;
+  min-height: 140px;
 }
 .bento-featured .project-image-container {
   min-height: 400px;
@@ -60,7 +60,7 @@
 }
 
 .project-content {
-  padding: var(--space-lg);
+  padding: var(--space-md);
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -92,6 +92,11 @@
   line-height: 1.5;
   margin-bottom: var(--space-md);
   flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .project-tech-list {

@@ -12,7 +12,7 @@ export default function Projects() {
   const [showAllProjects, setShowAllProjects] = useState(false);
 
   const currentProjects = projects[language];
-  const displayedProjects = showAllProjects ? currentProjects : currentProjects.slice(0, 4);
+  const displayedProjects = showAllProjects ? currentProjects : currentProjects.slice(0, 3);
 
   return (
     <section id="projects" className="projects">
@@ -102,7 +102,7 @@ export default function Projects() {
           })}
         </div>
 
-        {currentProjects.length > 4 && (
+        {currentProjects.length > 3 && (
           <div className="view-more-container" style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
             <button 
               className="btn btn-outline"
