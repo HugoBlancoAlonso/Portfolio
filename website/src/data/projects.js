@@ -309,6 +309,7 @@ export const skills = [
   {
     category: 'frontend',
     items: [
+      { name: 'Angular', icon: 'SiAngular' },
       { name: 'React', icon: 'SiReact' },
       { name: 'React Native', icon: 'SiReact' },
       { name: 'Expo', icon: 'SiExpo' },
@@ -319,6 +320,7 @@ export const skills = [
   {
     category: 'tools',
     items: [
+      { name: 'Databricks', icon: 'SiDatabricks' },
       { name: 'Docker', icon: 'SiDocker' },
       { name: 'Git', icon: 'SiGit' },
       { name: 'GitHub', icon: 'SiGithub' },

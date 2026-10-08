@@ -17,6 +17,8 @@ import {
   SiGithub,
   SiUnrealengine,
   SiSwagger,
+  SiAngular,
+  SiDatabricks,
 } from 'react-icons/si';
 import { FaBrain, FaRobot, FaCogs, FaDatabase, FaCubes } from 'react-icons/fa';
 import { useLanguage } from '../i18n/LanguageContext';
@@ -24,6 +26,8 @@ import { skills as skillsData } from '../data/projects';
 import '../styles/skills.css';
 
 const iconMap = {
+  SiAngular: SiAngular,
+  SiDatabricks: SiDatabricks,
   SiPython: SiPython,
   SiTypescript: SiTypescript,
   SiJavascript: SiJavascript,

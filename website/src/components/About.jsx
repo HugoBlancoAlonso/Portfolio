@@ -4,7 +4,7 @@ import '../styles/about.css';
 
 const stats = [
   { value: '5', key: 'projects' },
-  { value: '20+', key: 'technologies' },
+  { value: '25+', key: 'technologies' },
   { value: '5', key: 'areas' },
 ];
 
